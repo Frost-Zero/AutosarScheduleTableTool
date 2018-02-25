@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EPCellController">
+   <children>
+      <VBox prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #aaaaaa;">
+         <children>
+            <Pane prefHeight="100.0" prefWidth="150.0">
+               <children>
+                  <TextField alignment="CENTER" layoutX="40.0" layoutY="25.0" prefHeight="50.0" prefWidth="70.0" promptText="EP 1" />
+               </children>
+            </Pane>
+            <Pane prefHeight="50.0" prefWidth="150.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="17.0" text="Offset:" />
+                  <TextField alignment="CENTER" layoutX="69.0" layoutY="12.0" prefHeight="27.0" prefWidth="57.0" promptText="0" />
+               </children>
+            </Pane>
+         </children></VBox>
+      <StackPane prefHeight="50.0" prefWidth="150.0">
+         <children>
+            <Rectangle fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
+         </children>
+      </StackPane>
+   </children>
+</VBox>
