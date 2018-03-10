@@ -1,5 +1,6 @@
 package po;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ public class EPPO {
 
     private int offset;
 
-    private List<TaskPO> Tasks;
+    private List<TaskPO> Tasks = new ArrayList<>();
 
     public EPPO() {
     }

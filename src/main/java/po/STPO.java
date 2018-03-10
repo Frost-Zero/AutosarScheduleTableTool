@@ -1,5 +1,6 @@
 package po;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,14 +10,17 @@ public class STPO {
 
     private int id;
 
-    private List<EPPO> EPs;
+    private List<EPPO> EPs = new ArrayList<>();
+
+    private int duration;
 
     public STPO() {
     }
 
-    public STPO(int id, List<EPPO> EPs) {
+    public STPO(int id, List<EPPO> EPs, int duration) {
         this.id = id;
         this.EPs = EPs;
+        this.duration = duration;
     }
 
     public int getId() {
@@ -33,5 +37,13 @@ public class STPO {
 
     public void setEPs(List<EPPO> EPs) {
         this.EPs = EPs;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 }

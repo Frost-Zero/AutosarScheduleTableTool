@@ -13,6 +13,7 @@ import service.ServiceFactory;
 import vo.STVO;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,9 @@ public class MainViewController {
     private TabPane stTabPane;
 
     private STService stService = ServiceFactory.STService();
+
+    List<FXMLLoader> loaders = new ArrayList<>();
+
 
     @FXML
     public void initialize() {
@@ -46,7 +50,11 @@ public class MainViewController {
             if (i >= stTabPane.getTabs().size()) {
                 addTab();
             }
-            Tab tab = stTabPane.getTabs().get(i);
+            Tab tab = stTabPane.getTabs().get(i); // i
+            FXMLLoader loader = loaders.get(i); // i
+            ScheduleTablePaneController controller = loader.getController();
+            controller.setSTVO(vo);
+
             tab.setText("ST" + vo.id);
         }
 
@@ -55,25 +63,24 @@ public class MainViewController {
 
     private void addTab() {
         Tab tab = new Tab();
+
         BorderPane borderPane = new BorderPane();
         tab.setContent(borderPane);
 
-        stTabPane.getTabs().add(tab);
-        addSTPaneInTab(tab);
-
-    }
-
-    private void addSTPaneInTab(Tab tab) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/ScheduleTablePane.fxml"));
             Pane pane = loader.load();
+            loaders.add(loader);
 
-            BorderPane borderPane = (BorderPane) tab.getContent();
             borderPane.setCenter(pane);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        stTabPane.getTabs().add(tab);
+
     }
+
 }

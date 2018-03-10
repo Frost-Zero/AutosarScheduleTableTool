@@ -4,6 +4,7 @@ package vo;
  * Created by Frost-D on 18/2/25.
  */
 public class EPVO {
+
     public int id;
     public int offset;
 

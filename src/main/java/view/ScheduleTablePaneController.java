@@ -9,8 +9,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import po.EPPO;
 import vo.EPVO;
 import util.Constant;
+import vo.STVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,9 +35,9 @@ public class ScheduleTablePaneController {
     private Pane STAxisPane;
 
 
+    private STVO stvo;
     private STAxisController stAxisController;
 
-    private List<EPVO> EPVOs = new ArrayList<>();
     private Hashtable<Integer, FXMLLoader> EPLoaders = new Hashtable<>();
     private Hashtable<Integer, Node> EPNodes = new Hashtable<>();
 
@@ -59,22 +61,27 @@ public class ScheduleTablePaneController {
             e.printStackTrace();
         }
 
-        // test
-        EPVO ep1 = new EPVO(0, 1);
-        addEPCell(ep1);
-
-        EPVO ep2 = new EPVO(1, 5);
-        addEPCell(ep2);
-
-        EPVO ep3 = new EPVO(2, 7);
-        addEPCell(ep3);
-
-        EPVO ep4 = new EPVO(3, 8);
-        addEPCell(ep4);
     }
 
-    public List<EPVO> getEPVOs() {
-        return EPVOs;
+
+    public void setSTVO(STVO stvo) {
+        this.stvo = stvo;
+        stAxisController.setSTVO(stvo);
+
+        List<EPVO> epvos = stvo.EPs;
+
+        for (EPVO epvo:epvos) {
+            addEPCell(epvo);
+        }
+
+        refreshEPLayout();
+    }
+
+    public void refreshSTVO(STVO stvo) {
+        this.stvo = stvo;
+
+        refreshEPLayout();
+
     }
 
     public void addEPCell(EPVO ep) {
@@ -85,12 +92,10 @@ public class ScheduleTablePaneController {
 
 
             Node node = loader.load();
-            EPVOs.add(ep);
             EPLoaders.put(ep.id, loader);
             EPNodes.put(ep.id, node);
 
             EPListPane.getChildren().add(node);
-            layoutEP(ep);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -99,14 +104,13 @@ public class ScheduleTablePaneController {
     }
 
     public void refreshEPLayout() {
-        for (EPVO ep : EPVOs) {
+        for (EPVO ep : stvo.EPs) {
             layoutEP(ep);
         }
     }
 
     private void layoutEP(EPVO ep) {
-        int maxDuration = stAxisController.getDuration();
-        System.out.println(maxDuration + "!!!");
+        int maxDuration = stvo.duration;
         Node node = EPNodes.get(ep.id);
 
         node.setLayoutX(EPLISTLAYOUT_X + (float) ep.offset / maxDuration * Constant.STAXIS_WIDTH);

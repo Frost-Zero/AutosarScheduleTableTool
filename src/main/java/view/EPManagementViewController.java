@@ -8,6 +8,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import service.ServiceFactory;
 
 import java.io.IOException;
 
@@ -17,6 +18,8 @@ import java.io.IOException;
 public class EPManagementViewController {
 
     private int i = 2;
+
+    private EPService epService = ServiceFactory.EPService();
 
     @FXML
     private TabPane EPmTabPane;
