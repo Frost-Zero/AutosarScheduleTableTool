@@ -1,32 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EPCellController">
+<Group xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EPCellController">
    <children>
-      <VBox prefHeight="150.0" prefWidth="150.0" style="-fx-background-color: #aaaaaa;">
+      <VBox onMouseClicked="#onEPClick" prefHeight="150.0" prefWidth="80.0" style="-fx-background-color: #aaaaaa;">
          <children>
-            <Pane prefHeight="100.0" prefWidth="150.0">
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="80.0" prefWidth="80.0" style="-fx-border-color: #eeeeee; -fx-border-width: 1; -fx-background-color: #FFFFFF;" text="EP1">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </Label>
+            <Pane prefHeight="70.0" prefWidth="80.0">
                <children>
-                  <TextField alignment="CENTER" layoutX="40.0" layoutY="25.0" prefHeight="50.0" prefWidth="70.0" promptText="EP 1" />
+                  <Label alignment="CENTER" layoutX="10.0" layoutY="34.0" prefWidth="60.0" text="0">
+                     <padding>
+                        <Insets bottom="5.0" left="10.0" right="10.0" top="5.0" />
+                     </padding>
+                  </Label>
+                  <Label layoutX="21.0" layoutY="12.0" text="Offset" />
                </children>
             </Pane>
-            <Pane prefHeight="50.0" prefWidth="150.0">
-               <children>
-                  <Label layoutX="14.0" layoutY="17.0" text="Offset:" />
-                  <TextField alignment="CENTER" layoutX="69.0" layoutY="12.0" prefHeight="27.0" prefWidth="57.0" promptText="0" />
-               </children>
-            </Pane>
-         </children></VBox>
-      <StackPane prefHeight="50.0" prefWidth="150.0">
-         <children>
-            <Rectangle fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="6.0" />
          </children>
-      </StackPane>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </VBox>
+      <Rectangle fill="#aaaaaa" height="50.0" layoutX="39.0" layoutY="150.0" onMouseClicked="#onEPClick" stroke="BLACK" strokeMiterLimit="1.0" strokeType="INSIDE" strokeWidth="0.0" width="2.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Rectangle>
    </children>
-</VBox>
+</Group>

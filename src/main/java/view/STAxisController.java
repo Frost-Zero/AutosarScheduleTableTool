@@ -16,6 +16,8 @@ public class STAxisController {
     private int duration;
     private ScheduleTablePaneController scheduleTablePaneController;
 
+
+
     @FXML
     public void initialize() {
 
@@ -53,6 +55,5 @@ public class STAxisController {
         scheduleTablePaneController.refreshEPLayout();
 
     }
-
 
 }

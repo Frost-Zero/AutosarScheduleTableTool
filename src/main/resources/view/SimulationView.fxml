@@ -13,63 +13,66 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="600.0" prefWidth="800.0">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0">
          <children>
-            <VBox prefHeight="600.0" prefWidth="200.0">
+            <HBox prefHeight="600.0" prefWidth="800.0">
                <children>
-                  <Pane prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #DDDDDD;">
+                  <VBox prefHeight="600.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="45.0" layoutY="20.0" text="ST starting :">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
-                  <ScrollPane prefHeight="370.0" prefWidth="200.0">
-                    <content>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="200.0" style="-fx-background-color: #EEEEEE;">
+                        <Pane prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #DDDDDD;">
                            <children>
-                              <Label layoutX="15.0" layoutY="20.0" text="ST1:">
+                              <Label layoutX="45.0" layoutY="20.0" text="ST starting :">
                                  <font>
-                                    <Font size="15.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Label>
-                              <TextField layoutX="70.0" layoutY="15.0" prefHeight="27.0" prefWidth="95.0" />
-                              <Label layoutX="15.0" layoutY="55.0" text="ST2:">
-                                 <font>
-                                    <Font size="15.0" />
-                                 </font>
-                              </Label>
-                              <TextField layoutX="70.0" layoutY="50.0" prefHeight="27.0" prefWidth="95.0" />
                            </children>
-                        </AnchorPane>
-                    </content>
-                  </ScrollPane>
-                  <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DDDDDD;">
+                        </Pane>
+                        <ScrollPane prefHeight="370.0" prefWidth="200.0">
+                           <content>
+                              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="370.0" prefWidth="200.0" style="-fx-background-color: #EEEEEE;">
+                                 <children>
+                                    <Label layoutX="15.0" layoutY="20.0" text="ST1:">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField layoutX="70.0" layoutY="15.0" prefHeight="27.0" prefWidth="95.0" />
+                                    <Label layoutX="15.0" layoutY="55.0" text="ST2:">
+                                       <font>
+                                          <Font size="15.0" />
+                                       </font>
+                                    </Label>
+                                    <TextField layoutX="70.0" layoutY="50.0" prefHeight="27.0" prefWidth="95.0" />
+                                 </children>
+                              </AnchorPane>
+                           </content>
+                        </ScrollPane>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DDDDDD;">
+                           <children>
+                              <Button layoutX="40.0" layoutY="30.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Simulate" />
+                              <Button layoutX="40.0" layoutY="100.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Cancel" />
+                           </children>
+                        </Pane>
+                     </children>
+                  </VBox>
+                  <Pane prefHeight="600.0" prefWidth="600.0">
                      <children>
-                        <Button layoutX="40.0" layoutY="30.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Simulate" />
-                        <Button layoutX="40.0" layoutY="100.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Cancel" />
+                        <LineChart prefHeight="600.0" prefWidth="600.0">
+                           <xAxis>
+                              <CategoryAxis side="BOTTOM" />
+                           </xAxis>
+                           <yAxis>
+                              <NumberAxis side="LEFT" />
+                           </yAxis>
+                        </LineChart>
                      </children>
                   </Pane>
                </children>
-            </VBox>
-            <Pane prefHeight="600.0" prefWidth="600.0">
-               <children>
-                  <LineChart prefHeight="600.0" prefWidth="600.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
-                  </LineChart>
-               </children>
-            </Pane>
+            </HBox>
          </children>
-      </HBox>
+      </Pane>
    </children>
-</Pane>
+</VBox>

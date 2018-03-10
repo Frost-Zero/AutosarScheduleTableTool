@@ -10,16 +10,16 @@
          <children>
             <Pane prefHeight="80.0" prefWidth="1080.0">
                <children>
-                  <Button layoutX="840.0" layoutY="25.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="EP Management" />
-                  <Button layoutX="650.0" layoutY="25.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Task Management" />
+                  <Button layoutX="840.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#onEPMClick" prefHeight="30.0" prefWidth="150.0" text="EP Management" />
+                  <Button layoutX="650.0" layoutY="25.0" mnemonicParsing="false" onMouseClicked="#onTMClick" prefHeight="30.0" prefWidth="150.0" text="Task Management" />
                </children>
             </Pane>
             <Pane fx:id="EPListPane" prefHeight="420.0" prefWidth="1080.0" style="-fx-background-color: #DDDDDD;" />
             <Pane fx:id="STAxisPane" prefHeight="100.0" prefWidth="1080.0" />
             <Pane prefHeight="100.0" prefWidth="1080.0">
                <children>
-                  <Button layoutX="840.0" layoutY="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Verification" />
-                  <Button layoutX="650.0" layoutY="30.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Simulation" />
+                  <Button layoutX="840.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#onVeriClick" prefHeight="30.0" prefWidth="150.0" text="Verification" />
+                  <Button layoutX="650.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#onSimuClick" prefHeight="30.0" prefWidth="150.0" text="Simulation" />
                </children></Pane>
          </children>
       </VBox>
