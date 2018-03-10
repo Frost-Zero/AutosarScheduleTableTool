@@ -2,8 +2,10 @@ package service;
 
 import po.EPPO;
 import po.STPO;
+import po.TaskPO;
 import vo.EPVO;
 import vo.STVO;
+import vo.TaskVO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +16,14 @@ import java.util.Random;
  */
 public class STService {
 
-    private int maxId = 1;
+    private int maxSTId = 1;
+    private int maxEPId = 1;
     private List<STPO> STs = new ArrayList<>();
+    private List<EPPO> EPs = new ArrayList<>();
 
     public void createST(STVO vo) {
         STPO po = STVOToSTPO(vo);
-        po.setId(maxId);
+        po.setId(maxSTId);
         po.setDuration(10);
 
         // TODO random ep
@@ -34,8 +38,36 @@ public class STService {
         }
         po.setEPs(eppos);
 
-        maxId++;
+        maxSTId++;
         STs.add(po);
+    }
+
+    public void createEP(EPVO vo) {
+        EPPO po = EPVOToEPPO(vo);
+
+        Random random = new Random();
+        po.setId(maxEPId);
+        po.setOffset(random.nextInt(10));
+
+        //TODO some useless tasks
+        List<TaskPO> taskpos = new ArrayList<>();
+        List<Integer> taskids = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            TaskPO taskpo = new TaskPO();
+            taskpo.setId(i);
+            taskids.add(i);
+            taskpo.setDeadline(random.nextInt(10));
+            taskpo.setExecution(random.nextInt(5));
+            taskpo.setPriority(random.nextInt(3));
+            taskpos.add(taskpo);
+        }
+        po.setTaskIds(taskids);
+
+        //TODO print offset
+        System.out.println(po.getOffset());
+
+        maxEPId++;
+        EPs.add(po);
     }
 
     public void removeST(int id) {
@@ -74,6 +106,14 @@ public class STService {
         List<STVO> vos = new ArrayList<>();
         for (STPO po:STs) {
             vos.add(STPOToSTVO(po));
+        }
+        return vos;
+    }
+
+    public List<EPVO> findEPs() {
+        List<EPVO> vos = new ArrayList<>();
+        for (EPPO po:EPs) {
+            vos.add(EPPOToEPVO(po));
         }
         return vos;
     }
@@ -134,16 +174,27 @@ public class STService {
         EPPO po = new EPPO();
         po.setId(vo.id);
         po.setOffset(vo.offset);
+
+        List<Integer> taskidsclone = new ArrayList<>();
+        for (Integer taskid:vo.TaskIds) {
+            taskidsclone.add(taskid);
+        }
+        po.setTaskIds(taskidsclone);
         // TODO task
         return po;
     }
+
     private EPVO EPPOToEPVO(EPPO po) {
         EPVO vo = new EPVO();
         vo.id = po.getId();
         vo.offset = po.getOffset();
+
+        List<Integer> taskidsclone = new ArrayList<>();
+        for (Integer taskid:po.getTaskIds()){
+            taskidsclone.add(taskid);
+        }
+        vo.TaskIds = taskidsclone;
         // TODO task
         return vo;
     }
-
-
 }

@@ -12,15 +12,15 @@ public class EPPO {
 
     private int offset;
 
-    private List<TaskPO> Tasks = new ArrayList<>();
+    private List<Integer> TaskIds = new ArrayList<>();
 
     public EPPO() {
     }
 
-    public EPPO(int id, int offset, List<TaskPO> tasks) {
+    public EPPO(int id, int offset, List<Integer> taskIds) {
         this.id = id;
         this.offset = offset;
-        Tasks = tasks;
+        TaskIds = taskIds;
     }
 
     public int getId() {
@@ -39,11 +39,11 @@ public class EPPO {
         this.offset = offset;
     }
 
-    public List<TaskPO> getTasks() {
-        return Tasks;
+    public List<Integer> getTaskIds() {
+        return TaskIds;
     }
 
-    public void setTasks(List<TaskPO> tasks) {
-        Tasks = tasks;
+    public void setTaskIds(List<Integer> taskIds) {
+        TaskIds = taskIds;
     }
 }

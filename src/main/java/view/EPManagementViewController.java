@@ -8,18 +8,20 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import service.STService;
 import service.ServiceFactory;
+import vo.EPVO;
+import vo.STVO;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Frost-D on 18/3/7.
  */
 public class EPManagementViewController {
 
-    private int i = 2;
-
-    private EPService epService = ServiceFactory.EPService();
 
     @FXML
     private TabPane EPmTabPane;
@@ -27,39 +29,56 @@ public class EPManagementViewController {
     @FXML
     private Button btnEPMDelete;
 
+    private STService stService = ServiceFactory.STService();
+
+    List<FXMLLoader> loaders = new ArrayList<>();
+
     @FXML
     public void initialize() {
-        BorderPane borderPane = new BorderPane();
-        EPmTabPane.getTabs().get(0).setContent(borderPane);
-        addTaskPaneInTab(0);
-        System.out.println("ok!!");
+        addEPConfig();
+
         refreshEPMBtnDelete();
     }
 
-    private void addTaskPaneInTab(int index) {
+    public void addEPConfig() {
+        EPVO epvo = new EPVO();
+        stService.createEP(epvo);
+        refreshEPMTabs();
+    }
+
+    public void refreshEPMTabs() {
+        List<EPVO> vos = stService.findEPs();
+
+        for (int i = 0; i < vos.size(); i++) {
+            EPVO vo = vos.get(i);
+            if (i >= EPmTabPane.getTabs().size()) {
+                addTab();
+            }
+            Tab tab = EPmTabPane.getTabs().get(i); // i
+
+            tab.setText("EP" + vo.id);
+        }
+    }
+
+    public void addTab(){
+        Tab tab = new Tab();
+        BorderPane borderPane = new BorderPane();
+        tab.setContent(borderPane);
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/EPConfigComponent.fxml"));
             Pane pane = loader.load();
+            loaders.add(loader);
 
-            BorderPane borderPane = (BorderPane) EPmTabPane.getTabs().get(index).getContent();
             borderPane.setCenter(pane);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
 
-    public void addEPConfig() {
-        Tab tab = new Tab();
-        int order = EPmTabPane.getTabs().size();
-        tab.setText("EP"+ i);
-        BorderPane borderPane = new BorderPane();
         EPmTabPane.getTabs().add(tab);
-        EPmTabPane.getTabs().get(order).setContent(borderPane);
-        System.out.println("tab has been added!!");
-        addTaskPaneInTab(order);
-        i++;
+
         refreshEPMBtnDelete();
     }
 

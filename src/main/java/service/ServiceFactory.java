@@ -7,7 +7,7 @@ public class ServiceFactory {
 
     private static STService _stService;
 
-    private static EPService _epService;
+//    private static EPService _epService;
 
     public static STService STService() {
         if (_stService == null) {
@@ -16,11 +16,11 @@ public class ServiceFactory {
         return _stService;
     }
 
-    public static EPService EPService() {
-        if (_epService == null) {
-            _epService = new EPService();
-        }
-        return _epService;
-    }
+//    public static EPService EPService() {
+//        if (_epService == null) {
+//            _epService = new EPService();
+//        }
+//        return _epService;
+//    }
 
 }
