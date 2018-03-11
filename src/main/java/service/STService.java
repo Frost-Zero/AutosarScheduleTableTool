@@ -64,7 +64,7 @@ public class STService {
         po.setTaskIds(taskids);
 
         //TODO print offset
-        System.out.println(po.getOffset());
+//        System.out.println(po.getOffset());
 
         maxEPId++;
         EPs.add(po);
@@ -85,6 +85,20 @@ public class STService {
         }
     }
 
+    public void removeEP(int id) {
+        int index = -1;
+        for (int i = 0; i < EPs.size(); i++) {
+            EPPO po = EPs.get(i);
+            if (po.getId() == id) {
+                index = i;
+                break;
+            }
+        }
+        if (index > -1 && index < EPs.size()){
+            EPs.remove(index);
+        }
+    }
+
     public STVO findSTById(int id) {
         int index = -1;
         for (int i = 0; i < STs.size(); i++) {
@@ -98,6 +112,23 @@ public class STService {
         if (index > -1 && index < STs.size()) {
             STPO po = STs.get(index);
             return STPOToSTVO(po);
+        }
+        return null;
+    }
+
+    public EPVO findEPById(int id) {
+        int index = -1;
+        for (int i = 0; i<EPs.size(); i++) {
+            EPPO po = EPs.get(i);
+            if (po.getId() == id) {
+                index = i;
+                break;
+            }
+        }
+
+        if (index > -1 && index < EPs.size()) {
+            EPPO po = EPs.get(index);
+            return EPPOToEPVO(po);
         }
         return null;
     }

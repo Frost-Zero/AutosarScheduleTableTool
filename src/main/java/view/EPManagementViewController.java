@@ -2,10 +2,8 @@ package view;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TabPane;
+import javafx.scene.Node;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import service.STService;
@@ -15,6 +13,7 @@ import vo.STVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -29,15 +28,24 @@ public class EPManagementViewController {
     @FXML
     private Button btnEPMDelete;
 
-    private STService stService = ServiceFactory.STService();
 
-    List<FXMLLoader> loaders = new ArrayList<>();
+    private STService stService = ServiceFactory.STService();
+    private EPConfigComponentController epConfigComponentController;
+
+    private Hashtable<Integer, FXMLLoader> EPLoaders = new Hashtable<>();
+    private Hashtable<Integer, Node> EPNodes = new Hashtable<>();
 
     @FXML
     public void initialize() {
-        addEPConfig();
+
+        List<EPVO> vos = stService.findEPs();
+        if(vos.size() == 0)
+            addEPConfig();
+        else
+            refreshEPMTabs();
 
         refreshEPMBtnDelete();
+
     }
 
     public void addEPConfig() {
@@ -52,15 +60,16 @@ public class EPManagementViewController {
         for (int i = 0; i < vos.size(); i++) {
             EPVO vo = vos.get(i);
             if (i >= EPmTabPane.getTabs().size()) {
-                addTab();
+                addTab(vo);
             }
             Tab tab = EPmTabPane.getTabs().get(i); // i
 
             tab.setText("EP" + vo.id);
+
         }
     }
 
-    public void addTab(){
+    public void addTab(EPVO ep){
         Tab tab = new Tab();
         BorderPane borderPane = new BorderPane();
         tab.setContent(borderPane);
@@ -68,10 +77,13 @@ public class EPManagementViewController {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/EPConfigComponent.fxml"));
-            Pane pane = loader.load();
-            loaders.add(loader);
+            Node node = loader.load();
+            EPLoaders.put(ep.id,loader);
+            EPNodes.put(ep.id,node);
+            epConfigComponentController=loader.getController();
+//            epConfigComponentController.setEPManagementViewController(this);
 
-            borderPane.setCenter(pane);
+            borderPane.setCenter(node);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -83,10 +95,17 @@ public class EPManagementViewController {
     }
 
     public void onEPMDeleteClick(){
+
         SingleSelectionModel<Tab> selectionModel = EPmTabPane.getSelectionModel();
+        String string = EPmTabPane.getSelectionModel().getSelectedItem().getText().substring(2);
+        int i = Integer.parseInt(string);
+
         EPmTabPane.getTabs().remove(EPmTabPane.getSelectionModel().getSelectedItem());
         if(selectionModel.getSelectedItem() != EPmTabPane.getTabs().get(EPmTabPane.getTabs().size()-1))
             selectionModel.select(selectionModel.getSelectedIndex()+1);
+
+        stService.removeEP(i);
+
         refreshEPMBtnDelete();
     }
 
@@ -96,4 +115,5 @@ public class EPManagementViewController {
         else if(EPmTabPane.getTabs().size() >= 2)
             btnEPMDelete.setDisable(false);
     }
+
 }

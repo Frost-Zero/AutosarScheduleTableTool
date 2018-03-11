@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="320.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EPConfigComponentController">
    <children>
       <Pane prefHeight="50.0" prefWidth="450.0">
          <children>
@@ -54,9 +54,9 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextField alignment="CENTER" layoutX="192.0" layoutY="12.0" promptText="3" />
+            <TextField fx:id="tfEPOffset" alignment="CENTER" layoutX="192.0" layoutY="12.0" promptText="3" />
             <Label layoutX="192.0" layoutY="53.0" text="(        0         -" />
-            <Label layoutX="292.0" layoutY="53.0" text="duration   )" />
+            <Label fx:id="labelEPDuration" layoutX="292.0" layoutY="53.0" text="duration   )" />
          </children>
       </Pane>
    </children>
