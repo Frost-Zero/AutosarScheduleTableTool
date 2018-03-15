@@ -7,9 +7,7 @@ import vo.EPVO;
 import vo.STVO;
 import vo.TaskVO;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Frost-D on 18/3/10.
@@ -19,7 +17,8 @@ public class STService {
     private int maxSTId = 1;
     private int maxEPId = 1;
     private List<STPO> STs = new ArrayList<>();
-    private List<EPPO> EPs = new ArrayList<>();
+//    private Hashtable<Integer,EPPO> EPs = new Hashtable<>();
+
 
     public void createST(STVO vo) {
         STPO po = STVOToSTPO(vo);
@@ -32,17 +31,57 @@ public class STService {
         for (int i = 0; i < 3; i++) {
             Random random = new Random();
             EPPO eppo = new EPPO();
-            eppo.setId(i);
+            eppo.setId(i+1);
             eppo.setOffset(random.nextInt(10));
             eppos.add(eppo);
+            maxEPId++;
         }
         po.setEPs(eppos);
+
+//        //TODO 实际上只要默认1个EP存在
+//        List<EPPO> eppos = new ArrayList<>();
+//        EPPO eppo = new EPPO();
+//        eppo.setId(0);
+//        eppo.setOffset(0);
+//        eppos.add(eppo);
+//        po.setEPs(eppos);
 
         maxSTId++;
         STs.add(po);
     }
 
-    public void createEP(EPVO vo) {
+//    public void createEP(EPVO vo) {
+//        EPPO po = EPVOToEPPO(vo);
+//
+//        Random random = new Random();
+//        po.setId(maxEPId);
+//        po.setOffset(random.nextInt(10));
+//
+//        //TODO some useless tasks
+//        List<TaskPO> taskpos = new ArrayList<>();
+//        List<Integer> taskids = new ArrayList<>();
+//        for (int i = 0; i < 3; i++) {
+//            TaskPO taskpo = new TaskPO();
+//            taskpo.setId(i);
+//            taskids.add(i);
+//            taskpo.setDeadline(random.nextInt(10));
+//            taskpo.setExecution(random.nextInt(5));
+//            taskpo.setPriority(random.nextInt(3));
+//            taskpos.add(taskpo);
+//        }
+//        po.setTaskIds(taskids);
+//
+//        //TODO print offset
+////        System.out.println(po.getOffset());
+//
+////        System.out.println("maxEPId:"+maxEPId);
+//
+//        maxEPId++;
+////        System.out.println("EPsize:"+EPs.size());
+//        EPs.add(po);
+//    }
+
+    public EPVO createEPInST(int STIndex, EPVO vo) {
         EPPO po = EPVOToEPPO(vo);
 
         Random random = new Random();
@@ -66,8 +105,12 @@ public class STService {
         //TODO print offset
 //        System.out.println(po.getOffset());
 
+//        System.out.println("maxEPId:"+maxEPId);
+
         maxEPId++;
-        EPs.add(po);
+//        System.out.println("EPsize:"+EPs.size());
+        STs.get(0).getEPs().add(po);
+        return EPPOToEPVO(po);
     }
 
     public void removeST(int id) {
@@ -85,8 +128,23 @@ public class STService {
         }
     }
 
-    public void removeEP(int id) {
+//    public void removeEP(int id) {
+//        int index = -1;
+//        for (int i = 0; i < EPs.size(); i++) {
+//            EPPO po = EPs.get(i);
+//            if (po.getId() == id) {
+//                index = i;
+//                break;
+//            }
+//        }
+//        if (index > -1 && index < EPs.size()){
+//            EPs.remove(index);
+//        }
+//    }
+
+    public void removeEPinST(int STIndex,int id) {
         int index = -1;
+        List<EPPO> EPs = STs.get(STIndex).getEPs();
         for (int i = 0; i < EPs.size(); i++) {
             EPPO po = EPs.get(i);
             if (po.getId() == id) {
@@ -116,8 +174,9 @@ public class STService {
         return null;
     }
 
-    public EPVO findEPById(int id) {
+    public EPVO findEPinSTById(int STIndex,int id) {
         int index = -1;
+        List<EPPO> EPs = STs.get(STIndex).getEPs();
         for (int i = 0; i<EPs.size(); i++) {
             EPPO po = EPs.get(i);
             if (po.getId() == id) {
@@ -141,13 +200,16 @@ public class STService {
         return vos;
     }
 
-    public List<EPVO> findEPs() {
+
+    public List<EPVO> findEPsInST(int STIndex) {
         List<EPVO> vos = new ArrayList<>();
+        List<EPPO> EPs = STs.get(STIndex).getEPs();
         for (EPPO po:EPs) {
             vos.add(EPPOToEPVO(po));
         }
         return vos;
     }
+
 
     public void updateSTById(int id, STVO stvo){
         int index = -1;
@@ -168,6 +230,20 @@ public class STService {
         if (index > -1 && index < STs.size()) {
             STs.set(index, STVOToSTPO(stvo));
         }
+
+    }
+
+    public void updateEPById(int STIndex,int id,int offset){
+        int index = -1;
+
+        for (int i = 0; i < STs.get(STIndex).getEPs().size(); i++) {
+            if (STs.get(STIndex).getEPs().get(i).getId() == id) {
+                STs.get(STIndex).getEPs().get(i).setOffset(offset);
+                break;
+            }
+        }
+//
+
 
     }
 

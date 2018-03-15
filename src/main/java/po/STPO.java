@@ -9,7 +9,7 @@ import java.util.List;
 public class STPO {
 
     private int id;
-
+    
     private List<EPPO> EPs = new ArrayList<>();
 
     private int duration;

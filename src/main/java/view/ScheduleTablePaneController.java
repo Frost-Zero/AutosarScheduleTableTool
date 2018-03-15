@@ -1,5 +1,6 @@
 package view;
 
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -9,10 +10,15 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import po.EPPO;
+import service.STService;
+import service.ServiceFactory;
+import service.TaskService;
 import vo.EPVO;
 import util.Constant;
 import vo.STVO;
+import vo.TaskVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -36,7 +42,16 @@ public class ScheduleTablePaneController {
 
 
     private STVO stvo;
+    private int stvo_id;
+    private TaskVO taskvo;
+    private int taskvo_id;
     private STAxisController stAxisController;
+    private EPManagementViewController epManagementViewController;
+    private EPCellController epCellController;
+    private TaskManagementViewController taskManagementViewController;
+
+    private STService stService = ServiceFactory.STService();
+    private TaskService taskService = ServiceFactory.taskService();
 
     private Hashtable<Integer, FXMLLoader> EPLoaders = new Hashtable<>();
     private Hashtable<Integer, Node> EPNodes = new Hashtable<>();
@@ -70,12 +85,27 @@ public class ScheduleTablePaneController {
 
         List<EPVO> epvos = stvo.EPs;
 
+        EPNodes.forEach((key, node) -> {EPListPane.getChildren().remove(node);});
+        EPNodes.clear();
         for (EPVO epvo:epvos) {
             addEPCell(epvo);
         }
 
         refreshEPLayout();
     }
+
+    public void setSTVOID(int id) {
+        this.stvo_id = id;
+    }
+
+//    public void setTaskVO(TaskVO taskvo) {
+//        this.taskvo = taskvo;
+//
+//    }
+
+//    public void setTaskVOID(int id) {
+//        this.taskvo_id = id;
+//    }
 
     public void refreshSTVO(STVO stvo) {
         this.stvo = stvo;
@@ -96,6 +126,8 @@ public class ScheduleTablePaneController {
             EPNodes.put(ep.id, node);
 
             EPListPane.getChildren().add(node);
+            epCellController = loader.getController();
+            epCellController.setEPVO(ep);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,6 +136,7 @@ public class ScheduleTablePaneController {
     }
 
     public void refreshEPLayout() {
+
         for (EPVO ep : stvo.EPs) {
             layoutEP(ep);
         }
@@ -128,6 +161,8 @@ public class ScheduleTablePaneController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/TaskManagementView.fxml"));
             VBox vbox = loader.load();
+            taskManagementViewController = loader.getController();
+            taskManagementViewController.setTaskVO(taskService.findTaskById(taskvo_id));
 
             TMStage = new Stage();
             TMStage.setScene(new Scene(vbox));
@@ -135,6 +170,14 @@ public class ScheduleTablePaneController {
                 TMStage = null;
             });
             TMStage.show();
+            TMStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent event) {
+                    TMStage.close();
+                    TMStage = null;
+                    taskvo = taskService.findTaskById(taskvo_id);
+//                    setTaskVO(taskvo);
+                }
+            });
             Popup popup = new Popup();
             popup.show(TMStage);
         } catch (IOException e) {
@@ -153,6 +196,8 @@ public class ScheduleTablePaneController {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/EPManagementView.fxml"));
             VBox vbox = loader.load();
+            epManagementViewController = loader.getController();
+            epManagementViewController.setSTVO(stService.findSTById(stvo_id));
 
             EPMStage = new Stage();
             EPMStage.setScene(new Scene(vbox));
@@ -160,8 +205,15 @@ public class ScheduleTablePaneController {
                 EPMStage = null;
             });
             EPMStage.show();
-            Popup popup = new Popup();
-            popup.show(EPMStage);
+            EPMStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent event) {
+                    EPMStage.close();
+                    EPMStage = null;
+//                    stvo = stService.findSTById(stvo_id);
+//                    setSTVO(stvo);
+                }
+            });
+
         } catch (IOException e) {
             e.printStackTrace();
         }

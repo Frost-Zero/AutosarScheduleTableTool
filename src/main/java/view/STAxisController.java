@@ -51,6 +51,7 @@ public class STAxisController {
         setTfDuration(stvo.duration);
         scheduleTablePaneController.refreshSTVO(newST);
     }
+
     @FXML
     public void onTFDurationAction(Event event) {
 
@@ -62,7 +63,6 @@ public class STAxisController {
         stService.updateSTById(stvo.id, stvo);
 
         refreshSTVO();
-
 
     }
 

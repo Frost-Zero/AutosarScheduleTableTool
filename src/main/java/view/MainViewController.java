@@ -54,6 +54,7 @@ public class MainViewController {
             FXMLLoader loader = loaders.get(i); // i
             ScheduleTablePaneController controller = loader.getController();
             controller.setSTVO(vo);
+            controller.setSTVOID(vo.id);
 
             tab.setText("ST" + vo.id);
         }

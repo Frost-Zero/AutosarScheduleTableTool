@@ -6,6 +6,7 @@ package service;
 public class ServiceFactory {
 
     private static STService _stService;
+    private static TaskService _taskService;
 
 //    private static EPService _epService;
 
@@ -14,6 +15,13 @@ public class ServiceFactory {
             _stService = new STService();
         }
         return _stService;
+    }
+
+    public static TaskService taskService() {
+        if (_taskService == null) {
+            _taskService = new TaskService();
+        }
+        return _taskService;
     }
 
 //    public static EPService EPService() {

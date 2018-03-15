@@ -1,5 +1,6 @@
 package view;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -30,6 +31,9 @@ public class EPManagementViewController {
 
 
     private STService stService = ServiceFactory.STService();
+
+    private STVO stvo;
+
     private EPConfigComponentController epConfigComponentController;
 
     private Hashtable<Integer, FXMLLoader> EPLoaders = new Hashtable<>();
@@ -38,35 +42,42 @@ public class EPManagementViewController {
     @FXML
     public void initialize() {
 
-        List<EPVO> vos = stService.findEPs();
-        if(vos.size() == 0)
-            addEPConfig();
-        else
-            refreshEPMTabs();
+//        List<EPVO> vos = stService.findEPs();
+//        if(vos.size() == 0)
+//            addEPConfig();
+//        else
+////            refreshEPMTabs();
+        EPmTabPane.getTabs().removeAll();
 
         refreshEPMBtnDelete();
-
     }
 
+
+    //btnAddEPConfig
     public void addEPConfig() {
         EPVO epvo = new EPVO();
-        stService.createEP(epvo);
-        refreshEPMTabs();
+        epvo = stService.createEPInST(stvo.id,epvo);
+        refreshEPMTabs(epvo);
     }
 
-    public void refreshEPMTabs() {
-        List<EPVO> vos = stService.findEPs();
+    public void EPConfig(EPVO epvo){
+//        stService.createEPInST(stvo.id,epvo);
+        refreshEPMTabs(epvo);
+    }
 
-        for (int i = 0; i < vos.size(); i++) {
-            EPVO vo = vos.get(i);
-            if (i >= EPmTabPane.getTabs().size()) {
+    public void refreshEPMTabs(EPVO vo) {
+//        List<EPVO> vos = stService.findEPsInST(stvo.id);
+//
+//        for (int i = 0; i < vos.size(); i++) {
+//            EPVO epvo = vos.get(i);
+//            if (i >= EPmTabPane.getTabs().size()) {
                 addTab(vo);
-            }
-            Tab tab = EPmTabPane.getTabs().get(i); // i
+//            }
+            Tab tab = EPmTabPane.getTabs().get(EPmTabPane.getTabs().size()-1); // i
 
             tab.setText("EP" + vo.id);
 
-        }
+//        }
     }
 
     public void addTab(EPVO ep){
@@ -81,7 +92,7 @@ public class EPManagementViewController {
             EPLoaders.put(ep.id,loader);
             EPNodes.put(ep.id,node);
             epConfigComponentController=loader.getController();
-//            epConfigComponentController.setEPManagementViewController(this);
+            epConfigComponentController.setEPVO(ep);
 
             borderPane.setCenter(node);
 
@@ -94,6 +105,8 @@ public class EPManagementViewController {
         refreshEPMBtnDelete();
     }
 
+
+    //btnEPDelete
     public void onEPMDeleteClick(){
 
         SingleSelectionModel<Tab> selectionModel = EPmTabPane.getSelectionModel();
@@ -104,7 +117,8 @@ public class EPManagementViewController {
         if(selectionModel.getSelectedItem() != EPmTabPane.getTabs().get(EPmTabPane.getTabs().size()-1))
             selectionModel.select(selectionModel.getSelectedIndex()+1);
 
-        stService.removeEP(i);
+        //TODO setSTINDEX
+        stService.removeEPinST(0,i);
 
         refreshEPMBtnDelete();
     }
@@ -116,4 +130,18 @@ public class EPManagementViewController {
             btnEPMDelete.setDisable(false);
     }
 
+    public void setSTVO(STVO stvo){
+        this.stvo = stvo;
+
+        List<EPVO> epvos = stvo.EPs;
+        System.out.println("epvos.size:"+epvos.size());
+        for (EPVO epvo:epvos) {
+            EPConfig(epvo);
+
+        }
+    }
+
+    public void onEPMConfirmClick(){
+//        stService
+    }
 }
