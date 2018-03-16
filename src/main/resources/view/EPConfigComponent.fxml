@@ -14,9 +14,9 @@
    <children>
       <Pane prefHeight="50.0" prefWidth="450.0">
          <children>
-            <Label layoutX="20.0" layoutY="15.0" text="&gt; TASK ACTIVATION">
+            <Label layoutX="20.0" layoutY="15.0" text="&gt; TASK ACTIVATION ( Execution, Deadline, Priority )">
                <font>
-                  <Font size="18.0" />
+                  <Font size="16.0" />
                </font>
             </Label>
          </children>
@@ -31,7 +31,7 @@
                   <Insets />
                </opaqueInsets>
             </ScrollPane>
-            <Button layoutX="390.0" layoutY="35.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#onAddEPTaskClick" prefHeight="30.0" prefWidth="30.0" text="+" />
+            <Button fx:id="btnEPAddTask" layoutX="390.0" layoutY="35.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#onAddEPTaskClick" prefHeight="30.0" prefWidth="30.0" text="+" />
             <Button fx:id="btnEPDeleteTask" layoutX="390.0" layoutY="106.0" minHeight="30.0" minWidth="30.0" mnemonicParsing="false" onMouseClicked="#onDeleteEPTaskClick" prefHeight="30.0" prefWidth="30.0" text="-" />
          </children>
       </Pane>

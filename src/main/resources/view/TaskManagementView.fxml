@@ -29,8 +29,8 @@
             </Pane>
             <Pane prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #DDDDDD;">
                <children>
-                  <Button layoutX="25.0" layoutY="130.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="OK" />
-                  <Button layoutX="25.0" layoutY="230.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Cancel" />
+                  <Button fx:id="btnTMConfirm" layoutX="25.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#onTMConfirmClick" prefHeight="60.0" prefWidth="100.0" text="Confirm" />
+                  <Button fx:id="btnTMCancel" layoutX="25.0" layoutY="230.0" mnemonicParsing="false" onMouseClicked="#onTMCancelClick" prefHeight="60.0" prefWidth="100.0" text="Cancel" />
                   <Button fx:id="btnTMDelete" layoutX="25.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#onTMDeleteClick" prefHeight="60.0" prefWidth="100.0" text="DELETE" />
                </children>
             </Pane>

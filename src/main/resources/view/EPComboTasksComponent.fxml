@@ -5,6 +5,6 @@
 
 <Pane fx:id="paneEPTask" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#onEPComboSelected" prefHeight="47.0" prefWidth="450.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.EPComboTasksComponentController">
    <children>
-      <ComboBox fx:id="comboEPTask" layoutX="20.0" layoutY="10.0" prefHeight="27.0" prefWidth="250.0" promptText="T1 (5, 6, 1)" />
+      <ComboBox fx:id="comboEPTask" layoutX="20.0" layoutY="10.0" prefHeight="27.0" prefWidth="250.0" promptText="NO TASK COULD BE CHOSEN!" />
    </children>
 </Pane>

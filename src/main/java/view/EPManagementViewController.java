@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import service.STService;
 import service.ServiceFactory;
 import vo.EPVO;
@@ -29,6 +30,15 @@ public class EPManagementViewController {
     @FXML
     private Button btnEPMDelete;
 
+    @FXML
+    private Button btnEPMtoTM;
+
+    @FXML
+    private Button btnEPMConfirm;
+
+    @FXML
+    private Button btnEPMCancel;
+
 
     private STService stService = ServiceFactory.STService();
 
@@ -48,6 +58,9 @@ public class EPManagementViewController {
 //        else
 ////            refreshEPMTabs();
         EPmTabPane.getTabs().removeAll();
+
+//        if(stService.findEPsInST(0).size() < 1)
+//            addEPConfig();
 
         refreshEPMBtnDelete();
     }
@@ -135,13 +148,29 @@ public class EPManagementViewController {
 
         List<EPVO> epvos = stvo.EPs;
         System.out.println("epvos.size:"+epvos.size());
+        if(epvos.size()<1)
+            addEPConfig();
         for (EPVO epvo:epvos) {
             EPConfig(epvo);
-
         }
     }
 
-    public void onEPMConfirmClick(){
-//        stService
+    public void onEPMConfirmClick() {
+        epConfigComponentController.updateEPs();
+
+        Stage stage = (Stage) btnEPMConfirm.getScene().getWindow();
+        stage.close();
     }
+
+    public void onEPMCancelClick() {
+        epConfigComponentController.cancelUpdateEPs();
+
+        Stage stage = (Stage) btnEPMCancel.getScene().getWindow();
+        stage.close();
+    }
+
+    public void onEPMtoTMClick() {
+
+    }
+
 }

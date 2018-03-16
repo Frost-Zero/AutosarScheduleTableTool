@@ -8,9 +8,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Popup;
-import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
+import javafx.stage.*;
 import po.EPPO;
 import service.STService;
 import service.ServiceFactory;
@@ -75,6 +73,9 @@ public class ScheduleTablePaneController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        if(taskService.findTasks().size() == 0)
+            taskService.createTask0();
 
     }
 
@@ -153,10 +154,7 @@ public class ScheduleTablePaneController {
 
     @FXML
     public void onTMClick() {
-        if (TMStage != null) {
-            TMStage.requestFocus();
-            return;
-        }
+
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/TaskManagementView.fxml"));
@@ -165,6 +163,8 @@ public class ScheduleTablePaneController {
             taskManagementViewController.setTaskVO(taskService.findTaskById(taskvo_id));
 
             TMStage = new Stage();
+//            TMStage.initModality(Modality.APPLICATION_MODAL);
+            TMStage.initStyle(StageStyle.UTILITY);
             TMStage.setScene(new Scene(vbox));
             TMStage.setOnCloseRequest((event) -> {
                 TMStage = null;
@@ -174,12 +174,11 @@ public class ScheduleTablePaneController {
                 public void handle(WindowEvent event) {
                     TMStage.close();
                     TMStage = null;
+//                    taskManagementViewController.onTMDeleteClick();
                     taskvo = taskService.findTaskById(taskvo_id);
-//                    setTaskVO(taskvo);
                 }
             });
-            Popup popup = new Popup();
-            popup.show(TMStage);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -188,10 +187,6 @@ public class ScheduleTablePaneController {
 
     @FXML
     public void onEPMClick() {
-        if (EPMStage != null) {
-            EPMStage.requestFocus();
-            return;
-        }
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/EPManagementView.fxml"));
@@ -200,6 +195,8 @@ public class ScheduleTablePaneController {
             epManagementViewController.setSTVO(stService.findSTById(stvo_id));
 
             EPMStage = new Stage();
+//            EPMStage.initModality(Modality.APPLICATION_MODAL);
+            EPMStage.initStyle(StageStyle.UTILITY);
             EPMStage.setScene(new Scene(vbox));
             EPMStage.setOnCloseRequest((event) -> {
                 EPMStage = null;
@@ -209,8 +206,8 @@ public class ScheduleTablePaneController {
                 public void handle(WindowEvent event) {
                     EPMStage.close();
                     EPMStage = null;
-//                    stvo = stService.findSTById(stvo_id);
-//                    setSTVO(stvo);
+                    stvo = stService.findSTById(stvo_id);
+                    setSTVO(stvo);
                 }
             });
 
@@ -221,16 +218,14 @@ public class ScheduleTablePaneController {
 
     @FXML
     public void onSimuClick(){
-        if (SimuStage != null) {
-            SimuStage.requestFocus();
-            return;
-        }
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/SimulationView.fxml"));
             VBox vbox = loader.load();
 
             SimuStage = new Stage();
+            SimuStage.initModality(Modality.APPLICATION_MODAL);
+            SimuStage.initStyle(StageStyle.UTILITY);
             SimuStage.setScene(new Scene(vbox));
             SimuStage.setOnCloseRequest((event) -> {
                 SimuStage = null;
@@ -247,16 +242,14 @@ public class ScheduleTablePaneController {
 
     @FXML
     public void onVeriClick(){
-        if (VeriStage != null) {
-            VeriStage.requestFocus();
-            return;
-        }
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/VerificationView.fxml"));
             VBox vbox = loader.load();
 
             VeriStage = new Stage();
+            VeriStage.initModality(Modality.APPLICATION_MODAL);
+            VeriStage.initStyle(StageStyle.UTILITY);
             VeriStage.setScene(new Scene(vbox));
             VeriStage.setOnCloseRequest((event) -> {
                 VeriStage = null;

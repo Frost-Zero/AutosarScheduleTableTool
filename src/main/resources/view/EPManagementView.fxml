@@ -29,9 +29,9 @@
             </Pane>
             <Pane prefHeight="350.0" prefWidth="150.0" style="-fx-background-color: #DDDDDD;">
                <children>
-                  <Button layoutX="25.0" layoutY="95.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Task Management" textAlignment="CENTER" wrapText="true" />
-                  <Button layoutX="25.0" layoutY="175.0" mnemonicParsing="false" onMouseClicked="#onEPMConfirmClick" prefHeight="60.0" prefWidth="100.0" text="Confirm" />
-                  <Button layoutX="25.0" layoutY="255.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Cancel" />
+                  <Button fx:id="btnEPMtoTM" layoutX="25.0" layoutY="95.0" mnemonicParsing="false" onMouseClicked="#onEPMtoTMClick" prefHeight="60.0" prefWidth="100.0" text="Task Management" textAlignment="CENTER" wrapText="true" />
+                  <Button fx:id="btnEPMConfirm" layoutX="25.0" layoutY="175.0" mnemonicParsing="false" onMouseClicked="#onEPMConfirmClick" prefHeight="60.0" prefWidth="100.0" text="Confirm" />
+                  <Button fx:id="btnEPMCancel" layoutX="25.0" layoutY="255.0" mnemonicParsing="false" onMouseClicked="#onEPMCancelClick" prefHeight="60.0" prefWidth="100.0" text="Cancel" />
                   <Button fx:id="btnEPMDelete" layoutX="25.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#onEPMDeleteClick" prefHeight="60.0" prefWidth="100.0" text="Delete" textAlignment="CENTER" wrapText="true" />
                </children>
             </Pane>

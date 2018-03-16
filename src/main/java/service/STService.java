@@ -18,6 +18,7 @@ public class STService {
     private int maxEPId = 1;
     private List<STPO> STs = new ArrayList<>();
 //    private Hashtable<Integer,EPPO> EPs = new Hashtable<>();
+    private List<Integer> EPs_temp = new ArrayList<>();
 
 
     public void createST(STVO vo) {
@@ -25,23 +26,22 @@ public class STService {
         po.setId(maxSTId);
         po.setDuration(10);
 
-        // TODO random ep
-        List<EPPO> eppos = new ArrayList<>();
+        //  random ep * 3
+//        List<EPPO> eppos = new ArrayList<>();
+//        for (int i = 0; i < 3; i++) {
+//            Random random = new Random();
+//            EPPO eppo = new EPPO();
+//            eppo.setId(i+1);
+//            eppo.setOffset(random.nextInt(10));
+//            eppos.add(eppo);
+//            maxEPId++;
+//        }
+//        po.setEPs(eppos);
 
-        for (int i = 0; i < 3; i++) {
-            Random random = new Random();
-            EPPO eppo = new EPPO();
-            eppo.setId(i+1);
-            eppo.setOffset(random.nextInt(10));
-            eppos.add(eppo);
-            maxEPId++;
-        }
-        po.setEPs(eppos);
-
-//        //TODO 实际上只要默认1个EP存在
+        //TODO 实际上只要默认1个EP存在
 //        List<EPPO> eppos = new ArrayList<>();
 //        EPPO eppo = new EPPO();
-//        eppo.setId(0);
+//        eppo.setId(1);
 //        eppo.setOffset(0);
 //        eppos.add(eppo);
 //        po.setEPs(eppos);
@@ -89,26 +89,14 @@ public class STService {
         po.setOffset(random.nextInt(10));
 
         //TODO some useless tasks
-        List<TaskPO> taskpos = new ArrayList<>();
         List<Integer> taskids = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            TaskPO taskpo = new TaskPO();
-            taskpo.setId(i);
-            taskids.add(i);
-            taskpo.setDeadline(random.nextInt(10));
-            taskpo.setExecution(random.nextInt(5));
-            taskpo.setPriority(random.nextInt(3));
-            taskpos.add(taskpo);
-        }
+
+        taskids.add(1);
+
         po.setTaskIds(taskids);
 
-        //TODO print offset
-//        System.out.println(po.getOffset());
-
-//        System.out.println("maxEPId:"+maxEPId);
-
         maxEPId++;
-//        System.out.println("EPsize:"+EPs.size());
+
         STs.get(0).getEPs().add(po);
         return EPPOToEPVO(po);
     }
@@ -242,9 +230,50 @@ public class STService {
                 break;
             }
         }
-//
+    }
 
+    public void addTaskIdInEPs(int STIndex,int EPId) {
+        // find index by id
+        int index = -1;
+        for (int i = 0; i < STs.get(STIndex).getEPs().size(); i++) {
+            EPPO po = STs.get(STIndex).getEPs().get(i);
+            if (po.getId() == EPId) {
+                index = i;
+                break;
+            }
+        }
+        if (index > -1 && index < STs.get(STIndex).getEPs().size()) {
+            STs.get(STIndex).getEPs().get(index).getTaskIds().add(1);
+        }
 
+    }
+
+    public void removeTaskIdInEPs(int STIndex,int EPId, int taskIdIndex) {
+        int index = -1;
+        for (int i = 0; i < STs.get(STIndex).getEPs().size(); i++) {
+            EPPO po = STs.get(STIndex).getEPs().get(i);
+            if (po.getId() == EPId) {
+                index = i;
+                break;
+            }
+        }
+        if (index > -1 && index < STs.get(STIndex).getEPs().size()) {
+            STs.get(STIndex).getEPs().get(index).getTaskIds().remove(taskIdIndex);
+        }
+    }
+
+    public void updateTaskIdInEPs(int STIndex, int EPId, int taskIdIndex, int taskId) {
+        int index = -1;
+        for (int i = 0; i < STs.get(STIndex).getEPs().size(); i++) {
+            EPPO po = STs.get(STIndex).getEPs().get(i);
+            if (po.getId() == EPId) {
+                index = i;
+                break;
+            }
+        }
+        if (index > -1 && index < STs.get(STIndex).getEPs().size()) {
+            STs.get(STIndex).getEPs().get(index).getTaskIds().set(taskIdIndex,taskId);
+        }
     }
 
     /////

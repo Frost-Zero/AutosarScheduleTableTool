@@ -8,6 +8,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import service.ServiceFactory;
 import service.TaskService;
 import vo.TaskVO;
@@ -29,6 +30,12 @@ public class TaskManagementViewController {
     @FXML
     private Button btnTMDelete;
 
+    @FXML
+    private Button btnTMConfirm;
+
+    @FXML
+    private Button btnTMCancel;
+
     private TaskVO taskvo;
 
     private TaskService taskService = ServiceFactory.taskService();
@@ -42,18 +49,15 @@ public class TaskManagementViewController {
         tmTabPane.getTabs().removeAll();
 
         refreshTMBtnDelete();
-
-//        BorderPane borderPane = new BorderPane();
-//        tmTabPane.getTabs().get(0).setContent(borderPane);
-//        addTaskPaneInTab(0);
-//        System.out.println("ok!!");
-//        refreshTMBtnDelete();
     }
 
     public void setTaskVO(TaskVO taskVO) {
         this.taskvo = taskVO;
+//
+//        if(taskService.findTasks().size() == 0)
+//            taskService.createTask0();
 
-
+        refreshTMConfig();
     }
 
     //btnAddTaskConfig
@@ -64,19 +68,6 @@ public class TaskManagementViewController {
         refreshTMConfig();
     }
 
-
-//    public void addTMConfig() {
-//        Tab tab = new Tab();
-//        int order = tmTabPane.getTabs().size();
-//        tab.setText("T"+ i);
-//        BorderPane borderPane = new BorderPane();
-//        tmTabPane.getTabs().add(tab);
-//        tmTabPane.getTabs().get(order).setContent(borderPane);
-//        System.out.println("tab has been added!!");
-//        addTaskPaneInTab(order);
-//        i++;
-//        refreshTMBtnDelete();
-//    }
 
     public void refreshTMConfig() {
         List<TaskVO> vos = taskService.findTasks();
@@ -96,22 +87,6 @@ public class TaskManagementViewController {
         }
 
     }
-
-//    private void addTaskPaneInTab(int index) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("/view/TaskConfigView.fxml"));
-//            Pane pane = loader.load();
-//            taskConfigController = loader.getController();
-////            taskConfigController.setTaskVO();
-//
-//            BorderPane borderPane = (BorderPane) tmTabPane.getTabs().get(index).getContent();
-//            borderPane.setCenter(pane);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public void addTaskTab() {
         Tab tab = new Tab();
@@ -135,43 +110,40 @@ public class TaskManagementViewController {
         refreshTMBtnDelete();
     }
 
-//    private void addTaskPaneInTab(TaskVO vo) {
-//        BorderPane borderPane = new BorderPane();
-//        try {
-//            FXMLLoader loader = new FXMLLoader();
-//            loader.setLocation(getClass().getResource("/view/TaskConfigView.fxml"));
-//            Pane pane = loader.load();
-//            taskConfigController = loader.getController();
-//            taskConfigController.setTaskVO(vo);
-//
-////            BorderPane borderPane = (BorderPane) tmTabPane.getTabs().get(index).getContent();
-//            borderPane.setCenter(pane);
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
     //btnDeleteTaskConfig
-    public void onTMDeleteClick(){
+    public void onTMDeleteClick() {
         SingleSelectionModel<Tab> selectionModel = tmTabPane.getSelectionModel();
         String string = tmTabPane.getSelectionModel().getSelectedItem().getText().substring(1);
         int i = Integer.parseInt(string);
 
         tmTabPane.getTabs().remove(selectionModel.getSelectedItem());
-        if(selectionModel.getSelectedItem() != tmTabPane.getTabs().get(tmTabPane.getTabs().size()-1))
+        loaders.remove(selectionModel.getSelectedIndex());
+        if(selectionModel.getSelectedItem() != tmTabPane.getTabs().get(tmTabPane.getTabs().size()-1) &&
+                selectionModel.getSelectedItem() != tmTabPane.getTabs().get(0))
             selectionModel.select(selectionModel.getSelectedIndex()+1);
         refreshTMBtnDelete();
 
         taskService.removeTask(i);
     }
 
-    private void refreshTMBtnDelete(){
+    private void refreshTMBtnDelete() {
         if(tmTabPane.getTabs().size() == 1)
             btnTMDelete.setDisable(true);
         else if(tmTabPane.getTabs().size() >= 2)
             btnTMDelete.setDisable(false);
+    }
+
+    public void onTMConfirmClick() {
+        taskConfigController.updateTasks();
+
+        Stage stage = (Stage) btnTMConfirm.getScene().getWindow();
+        stage.close();
+    }
+
+    public void onTMCancelClick() {
+        taskConfigController.cancelUpdateTasks();
+
+        Stage stage = (Stage) btnTMCancel.getScene().getWindow();
+        stage.close();
     }
 }
