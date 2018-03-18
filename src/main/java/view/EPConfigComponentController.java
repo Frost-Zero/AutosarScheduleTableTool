@@ -43,20 +43,20 @@ public class EPConfigComponentController {
     private STService stService = ServiceFactory.STService();
     private TaskService taskService = ServiceFactory.taskService();
 
-    private List<EPVO> epvos = new ArrayList<>();
-
     private EPVO epvo;
 
-    private EPComboTasksComponentController epComboTasksComponentController;
+//    private EPComboTasksComponentController epComboTasksComponentController;
 
-    private int taskid_temp = -1;
+//    private int taskid_temp = -1;
+
+    private int selectedIndex;
 
     @FXML
     public void initialize() {
 
-        tfEPOffset.textProperty().addListener((observable, oldValue, newValue) -> {
-
-        });
+//        tfEPOffset.textProperty().addListener((observable, oldValue, newValue) -> {
+//
+//        });
 
         refreshBtn();
 
@@ -65,29 +65,47 @@ public class EPConfigComponentController {
     public void setEPVO(EPVO epvo){
         this.epvo = epvo;
 
-//        tfEPOffset.setText(""+epvo.offset);
         setTFEPOffset(epvo.offset);
-        //TODO getSTID
+
         labelEPDuration.setText("      "+stService.findSTs().get(0).duration+"        )");
 
         for(int i = 0; i<epvo.TaskIds.size(); i++) {
-            taskid_temp = epvo.TaskIds.get(i);
-            onAddEPTask();
+            int taskId = epvo.TaskIds.get(i);
+            onAddEPTask(epvo.stId, epvo.id, i, taskId);
         }
 
     }
 
     public void refreshEPVO(){
-        //TODO getSTID
-        EPVO newEP = stService.findEPinSTById(0,epvo.id);
+        EPVO newEP = stService.findEPinSTById(this.epvo.stId, this.epvo.id);
         this.epvo = newEP;
+
         setTFEPOffset(epvo.offset);
 
+        VBoxEPTasks.getChildren().clear();
+
+        for(int i = 0; i<epvo.TaskIds.size(); i++) {
+            int taskId = epvo.TaskIds.get(i);
+            onAddEPTask(epvo.stId, epvo.id, i, taskId);
+        }
+
+        this.selectedIndex = -1;
     }
 
 
     private void setTFEPOffset(int offset) {
         tfEPOffset.setText("" + offset);
+    }
+
+    public void setSelectedIndex(int selectedIndex) {
+        List<Node> nodes = VBoxEPTasks.getChildrenUnmodifiable();
+        if(this.selectedIndex >= 0) {
+            nodes.get(this.selectedIndex).setStyle("-fx-background-color: #FFFFFF;");
+        }
+        nodes.get(selectedIndex).setStyle("-fx-background-color: #CCCCCC;");
+        this.selectedIndex = selectedIndex;
+
+
     }
 
     @FXML
@@ -99,7 +117,7 @@ public class EPConfigComponentController {
         System.out.print(epvo.offset);
         epvo.offset = num;
         //TODO getSTINDEX
-        stService.updateEPById(0,epvo.id,num);
+        stService.updateEPById(epvo.stId, epvo.id, num);
 
         refreshEPVO();
     }
@@ -107,60 +125,39 @@ public class EPConfigComponentController {
 
     public void onAddEPTaskClick() {
 
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/EPComboTasksComponent.fxml"));
-            Node node = loader.load();
-//            EPLoaders.put(ep.id,loader);
-//            EPNodes.put(ep.id,node);
-            epComboTasksComponentController=loader.getController();
+        stService.addTaskIdInEPs(epvo.stId, epvo.id);
 
-            epComboTasksComponentController.setTaskIDTemp(taskid_temp);
-            stService.addTaskIdInEPs(0,epvo.id);
-            epComboTasksComponentController.loadComboTaskMessage(epvo);
-
-            VBoxEPTasks.getChildren().add(node);
-            refreshBtnDeleteEP();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void onAddEPTask() {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/EPComboTasksComponent.fxml"));
-            Node node = loader.load();
-//            EPLoaders.put(ep.id,loader);
-//            EPNodes.put(ep.id,node);
-            epComboTasksComponentController=loader.getController();
-
-            epComboTasksComponentController.setTaskIDTemp(taskid_temp);
-
-            epComboTasksComponentController.loadComboTaskMessage(epvo);
-
-            VBoxEPTasks.getChildren().add(node);
-            refreshBtnDeleteEP();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        refreshEPVO();
     }
 
     public void onDeleteEPTaskClick() {
-        int index;
-
-        index = epComboTasksComponentController.getNodeSelected();
-
-        if(index<VBoxEPTasks.getChildren().size() && index != -1) {
-            VBoxEPTasks.getChildren().remove(index);
-            stService.removeTaskIdInEPs(0,epvo.id,epComboTasksComponentController.getNodeSelected());
-            epComboTasksComponentController.setNodeSelected(-1);
+        if(this.selectedIndex >= 0) {
+            stService.removeTaskIdInEPs(epvo.stId, epvo.id, this.selectedIndex);
         }
-        refreshBtnDeleteEP();
+        refreshEPVO();
 
     }
+
+    public void onAddEPTask(int STId, int EPId, int index, int taskId) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("/view/EPComboTasksComponent.fxml"));
+            Node node = loader.load();
+//            EPLoaders.put(ep.id,loader);
+//            EPNodes.put(ep.id,node);
+            EPComboTasksComponentController epComboTasksComponentController = loader.getController();
+            epComboTasksComponentController.setEpConfigComponentController(this);
+
+            epComboTasksComponentController.init(STId, EPId, index, taskId);
+            VBoxEPTasks.getChildren().add(node);
+            refreshBtnDeleteEP();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public void refreshBtn() {
         refreshBtnDeleteEP();

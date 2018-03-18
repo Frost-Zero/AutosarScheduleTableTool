@@ -11,6 +11,7 @@ import java.util.List;
 public class EPVO {
 
     public int id;
+    public int stId;
     public int offset;
 
     public List<Integer> TaskIds = new ArrayList<>();
@@ -18,7 +19,7 @@ public class EPVO {
     public EPVO() {
     }
 
-    public EPVO(int id, int offset, List<Integer> taskIds) {
+    public EPVO(int id, int stId, int offset, List<Integer> taskIds) {
         this.id = id;
         this.offset = offset;
         TaskIds = taskIds;

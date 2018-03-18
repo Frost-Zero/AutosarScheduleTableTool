@@ -9,6 +9,7 @@ import vo.STVO;
 import vo.TaskVO;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -26,6 +27,7 @@ public class TaskService {
         po.setDeadline(vo.deadline);
         po.setExecution(vo.execution);
         po.setPriority(vo.priority);
+
 
         maxTaskId++;
         Tasks_temp.add(po);

@@ -39,6 +39,9 @@ public class EPManagementViewController {
     @FXML
     private Button btnEPMCancel;
 
+    @FXML
+    private Label labelSTId;
+
 
     private STService stService = ServiceFactory.STService();
 
@@ -57,6 +60,7 @@ public class EPManagementViewController {
 //            addEPConfig();
 //        else
 ////            refreshEPMTabs();
+
         EPmTabPane.getTabs().removeAll();
 
 //        if(stService.findEPsInST(0).size() < 1)
@@ -65,6 +69,19 @@ public class EPManagementViewController {
         refreshEPMBtnDelete();
     }
 
+
+    public void setSTVO(STVO stvo){
+        this.stvo = stvo;
+
+        List<EPVO> epvos = stvo.EPs;
+        System.out.println("epvos.size:"+epvos.size());
+        if(epvos.size()<1)
+            addEPConfig();
+        for (EPVO epvo:epvos) {
+            EPConfig(epvo);
+        }
+        labelSTId.setText("ST"+stvo.id+" :");
+    }
 
     //btnAddEPConfig
     public void addEPConfig() {
@@ -141,18 +158,6 @@ public class EPManagementViewController {
             btnEPMDelete.setDisable(true);
         else if(EPmTabPane.getTabs().size() >= 2)
             btnEPMDelete.setDisable(false);
-    }
-
-    public void setSTVO(STVO stvo){
-        this.stvo = stvo;
-
-        List<EPVO> epvos = stvo.EPs;
-        System.out.println("epvos.size:"+epvos.size());
-        if(epvos.size()<1)
-            addEPConfig();
-        for (EPVO epvo:epvos) {
-            EPConfig(epvo);
-        }
     }
 
     public void onEPMConfirmClick() {
