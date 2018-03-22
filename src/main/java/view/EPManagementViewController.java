@@ -55,16 +55,7 @@ public class EPManagementViewController {
     @FXML
     public void initialize() {
 
-//        List<EPVO> vos = stService.findEPs();
-//        if(vos.size() == 0)
-//            addEPConfig();
-//        else
-////            refreshEPMTabs();
-
         EPmTabPane.getTabs().removeAll();
-
-//        if(stService.findEPsInST(0).size() < 1)
-//            addEPConfig();
 
         refreshEPMBtnDelete();
     }
@@ -91,23 +82,17 @@ public class EPManagementViewController {
     }
 
     public void EPConfig(EPVO epvo){
-//        stService.createEPInST(stvo.id,epvo);
         refreshEPMTabs(epvo);
     }
 
     public void refreshEPMTabs(EPVO vo) {
-//        List<EPVO> vos = stService.findEPsInST(stvo.id);
-//
-//        for (int i = 0; i < vos.size(); i++) {
-//            EPVO epvo = vos.get(i);
-//            if (i >= EPmTabPane.getTabs().size()) {
-                addTab(vo);
-//            }
-            Tab tab = EPmTabPane.getTabs().get(EPmTabPane.getTabs().size()-1); // i
 
-            tab.setText("EP" + vo.id);
+        addTab(vo);
 
-//        }
+        Tab tab = EPmTabPane.getTabs().get(EPmTabPane.getTabs().size()-1); // i
+
+        tab.setText("EP" + vo.id);
+
     }
 
     public void addTab(EPVO ep){
@@ -161,14 +146,14 @@ public class EPManagementViewController {
     }
 
     public void onEPMConfirmClick() {
-        epConfigComponentController.updateEPs();
+//        epConfigComponentController.updateEPs();
 
         Stage stage = (Stage) btnEPMConfirm.getScene().getWindow();
         stage.close();
     }
 
     public void onEPMCancelClick() {
-        epConfigComponentController.cancelUpdateEPs();
+//        epConfigComponentController.cancelUpdateEPs();
 
         Stage stage = (Stage) btnEPMCancel.getScene().getWindow();
         stage.close();

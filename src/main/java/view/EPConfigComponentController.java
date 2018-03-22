@@ -45,10 +45,6 @@ public class EPConfigComponentController {
 
     private EPVO epvo;
 
-//    private EPComboTasksComponentController epComboTasksComponentController;
-
-//    private int taskid_temp = -1;
-
     private int selectedIndex;
 
     @FXML
@@ -180,12 +176,12 @@ public class EPConfigComponentController {
         }
     }
 
-    public void updateEPs() {
-
-    }
-
-    public void cancelUpdateEPs() {
-
-    }
+//    public void updateEPs() {
+//
+//    }
+//
+//    public void cancelUpdateEPs() {
+//
+//    }
 
 }

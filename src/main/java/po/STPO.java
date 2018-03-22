@@ -14,13 +14,16 @@ public class STPO {
 
     private int duration;
 
+    private int start_time;
+
     public STPO() {
     }
 
-    public STPO(int id, List<EPPO> EPs, int duration) {
+    public STPO(int id, List<EPPO> EPs, int duration, int start_time) {
         this.id = id;
         this.EPs = EPs;
         this.duration = duration;
+        this.start_time = start_time;
     }
 
     public int getId() {
@@ -45,5 +48,13 @@ public class STPO {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+
+    public int getStart_time() {
+        return start_time;
+    }
+
+    public void setStart_time(int start_time) {
+        this.start_time = start_time;
     }
 }

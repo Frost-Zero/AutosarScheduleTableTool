@@ -16,13 +16,16 @@ public class STVO {
 
     public int duration;
 
+    public int startTime;
+
     public STVO() {
     }
 
-    public STVO(int id, List<EPVO> EPs, int duration) {
+    public STVO(int id, List<EPVO> EPs, int duration, int startTime) {
         this.id = id;
         this.EPs = EPs;
         this.duration = duration;
+        this.startTime = startTime;
     }
 
 }

@@ -7,6 +7,7 @@ public class ServiceFactory {
 
     private static STService _stService;
     private static TaskService _taskService;
+    private static DataCalcService _dataCalcService;
 
 //    private static EPService _epService;
 
@@ -24,6 +25,12 @@ public class ServiceFactory {
         return _taskService;
     }
 
+    public static DataCalcService dataCalcService() {
+        if (_dataCalcService == null) {
+            _dataCalcService = new DataCalcService();
+        }
+        return _dataCalcService;
+    }
 //    public static EPService EPService() {
 //        if (_epService == null) {
 //            _epService = new EPService();
