@@ -230,11 +230,13 @@ public class ScheduleTablePaneController {
             SimuStage.setOnCloseRequest((event) -> {
                 SimuStage = null;
             });
+            SimuStage.setWidth(900);
+            SimuStage.setHeight(600);
             SimuStage.show();
-            Popup popup = new Popup();
-            popup.setWidth(800);
-            popup.setHeight(600);
-            popup.show(SimuStage);
+//            Popup popup = new Popup();
+//            popup.setWidth(900);
+//            popup.setHeight(600);
+//            popup.show(SimuStage);
         } catch (IOException e) {
             e.printStackTrace();
         }
