@@ -85,18 +85,29 @@ public class DataCalcService {
         //find the highest priority task
         priority = 255;
 
-        for (CalcDataPO po:readyQueue) {
-            if (po.getPriority() < priority) {
-                priority = po.getPriority();
-                releaseTime = po.getReleaseTime();
-                execpo = po;
-            } else if (po.getPriority() == priority && po.getReleaseTime() < releaseTime) {
-                releaseTime = po.getReleaseTime();
-                execpo = po;
+        if(readyQueue.size()>0){
+            for (CalcDataPO po:readyQueue) {
+                if (po.getPriority() < priority) {
+                    priority = po.getPriority();
+                    releaseTime = po.getReleaseTime();
+                    execpo = po;
+                } else if (po.getPriority() == priority && po.getReleaseTime() < releaseTime) {
+                    releaseTime = po.getReleaseTime();
+                    execpo = po;
+                }
             }
+            //execute the chosen po
+            execute();
+        } else {
+            execpo = null;
+            for (CalcDataPO po:readyQueue) {
+                po.setDeadline(po.getDeadline() - 1);
+            }
+            for (CalcDataPO po:calcDataPOs) {
+                po.setTodo(po.getTodo() - 1);
+            }
+            currentTime++;
         }
-        //execute the chosen po
-        execute();
     }
 
     public void execute() {
@@ -146,6 +157,13 @@ public class DataCalcService {
         return vo;
     }
 
+    public boolean isReadyQueueEmpty() {
+        if(execpo == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 }

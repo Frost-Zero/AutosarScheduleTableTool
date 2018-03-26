@@ -110,7 +110,7 @@ public class EPConfigComponentController {
         String text = tfEPOffset.getText();
         int num = Integer.parseInt(text);
 
-        System.out.print(epvo.offset);
+//        System.out.print(epvo.offset);
         epvo.offset = num;
         //TODO getSTINDEX
         stService.updateEPById(epvo.stId, epvo.id, num);

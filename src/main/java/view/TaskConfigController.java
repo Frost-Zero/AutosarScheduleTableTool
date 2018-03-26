@@ -83,7 +83,7 @@ public class TaskConfigController {
         String string = tfTaskExecution.getText();
         int execution = Integer.parseInt(string);
 
-        System.out.println("Execution:" + execution);
+//        System.out.println("Execution:" + execution);
         taskvo.execution = execution;
         taskService.updateTaskById(taskvo.id, taskvo);
 
@@ -95,7 +95,7 @@ public class TaskConfigController {
         String string = tfTaskDeadline.getText();
         int deadline = Integer.parseInt(string);
 
-        System.out.println("Deadline:" + deadline);
+//        System.out.println("Deadline:" + deadline);
         taskvo.deadline = deadline;
         taskService.updateTaskById(taskvo.id,taskvo);
 
@@ -107,7 +107,7 @@ public class TaskConfigController {
         String string = tfTaskPriority.getText();
         int priority = Integer.parseInt(string);
 
-        System.out.println("Priority:" + priority);
+//        System.out.println("Priority:" + priority);
         taskvo.priority = priority;
         taskService.updateTaskById(taskvo.id,taskvo);
 

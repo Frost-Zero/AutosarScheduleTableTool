@@ -65,7 +65,7 @@ public class EPManagementViewController {
         this.stvo = stvo;
 
         List<EPVO> epvos = stvo.EPs;
-        System.out.println("epvos.size:"+epvos.size());
+//        System.out.println("epvos.size:"+epvos.size());
         if(epvos.size()<1)
             addEPConfig();
         for (EPVO epvo:epvos) {

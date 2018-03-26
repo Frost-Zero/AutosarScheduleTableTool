@@ -1,8 +1,6 @@
 package view;
 
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
+
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.util.Duration;
 import service.DataCalcService;
 import service.STService;
 import service.ServiceFactory;
@@ -42,18 +39,13 @@ public class SimulationViewController {
 
     private int lowerBound = 0;
     private int upperBound = 10;
+    private long superPeriod = 1;
 
-    private List<STVO> STs = stService.findSTs();
+    private List<STVO> STs;
 
     private List<CalcDataVO> calcDataVOs = new ArrayList<>();
 
-    private List<CalcDataVO> calcDataVOsTemp = new ArrayList<>();
-
     private Timer timer;
-
-    private Timeline timeline;
-
-//    private boolean isRun = false;
 
     @FXML
     private Pane paneGanttChart;
@@ -68,8 +60,18 @@ public class SimulationViewController {
     public void initialize() {
         vboxStartTime.getChildren().removeAll();
         cssOrder = 0;
+        superPeriod = 1;
         calcDataVOs.clear();
         machiness.clear();
+
+        STs = stService.findSTs();
+        for(int i = 0; i < STs.size(); i++) {
+            addStartTimeComponent(STs.get(i).id);
+        }
+    }
+
+    @FXML
+    public void onGenerateClick() {
         dataCalcService.init();
         dataFunctions();
 
@@ -78,26 +80,23 @@ public class SimulationViewController {
         chart.setPrefHeight(600);
 
         paneGanttChart.getChildren().add(chart);
-
-        for(int i = 0; i < STs.size(); i++) {
-            addStartTimeComponent();
-        }
     }
 
     @FXML
     public void onSimulateStartClick() {
         if (btnSimulateStart.getText().equals("Simulate") ) {
+//            btnSimulateStart.setStyle("fx-background-color: #00EE00");
             btnSimulateStart.setText("STOP");
             timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    if (upperBound < calcDataVOs.size()) {
+                    if (upperBound < superPeriod) {
                         upperBound++;
                         lowerBound++;
                         xAxis.setUpperBound(upperBound);
                         xAxis.setLowerBound(lowerBound);
-                    } else if (upperBound >= calcDataVOs.size()) {
+                    } else if (upperBound >= superPeriod) {
                         timer.cancel();
                         timer.purge();
                         timer = null;
@@ -107,6 +106,8 @@ public class SimulationViewController {
         } else if (btnSimulateStart.getText().equals("STOP")) {
             btnSimulateStart.setText("Simulate");
             stopTimerTask();
+            xAxis.setLowerBound(0);
+            xAxis.setUpperBound(upperBound);
         }
 
     }
@@ -119,11 +120,15 @@ public class SimulationViewController {
         }
     }
 
-    public void addStartTimeComponent() {
+    public void addStartTimeComponent(int STId) {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("/view/SimulationStartTimeComponent.fxml"));
             Node node = loader.load();
+            SimulationStartTimeComponentController simulationStartTimeComponentController = loader.getController();
+            simulationStartTimeComponentController.setSimulationViewController(this);
+
+            simulationStartTimeComponentController.init(STId);
 
             vboxStartTime.getChildren().add(node);
         } catch (IOException e) {
@@ -175,11 +180,17 @@ public class SimulationViewController {
     private void dataFunctions() {
         STs = stService.findSTs();
 
+        for (STVO vo:STs) {
+            superPeriod *= vo.duration;
+        }
+
         dataCalcService.dataCalc(STs);
-        for(int i = 0; i < 200; i++) {
+        for(int i = 0; i < superPeriod; i++) {
             dataCalcService.execution();
-            calcDataVOs.add(dataCalcService.dataListVO());
-            dataCalcService.afterExecute();
+            if(!dataCalcService.isReadyQueueEmpty()) {
+                calcDataVOs.add(dataCalcService.dataListVO());
+                dataCalcService.afterExecute();
+            }
         }
     }
 }

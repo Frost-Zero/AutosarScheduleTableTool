@@ -231,12 +231,34 @@ public class STService {
         }
         return -1;
     }
+
+
+    public void updateStartTimeBySTId(int stid, int startTime) {
+
+        for (STPO po:STs) {
+            if (po.getId() == stid) {
+                po.setStart_time(startTime);
+                break;
+            }
+        }
+    }
+
+    public int findStartTimeBySTId(int stid) {
+        for (STPO po:STs) {
+            if (po.getId() == stid) {
+                return po.getStart_time();
+            }
+        }
+        return -1;
+    }
+
     /////
 
     private STPO STVOToSTPO(STVO vo) {
         STPO po = new STPO();
         po.setId(vo.id);
         po.setDuration(vo.duration);
+        po.setStart_time(vo.startTime);
 
         List<EPPO> eppos = new ArrayList<>();
         for (EPVO epvo:vo.EPs) {
@@ -251,6 +273,7 @@ public class STService {
         STVO vo = new STVO();
         vo.id = po.getId();
         vo.duration = po.getDuration();
+        vo.startTime = po.getStart_time();
 
         List<EPVO> epvos = new ArrayList<>();
         for (EPPO eppo:po.getEPs()) {

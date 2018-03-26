@@ -32,8 +32,8 @@
                         </ScrollPane>
                         <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #DDDDDD;">
                            <children>
-                              <Button fx:id="btnSimulateStart" layoutX="40.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#onSimulateStartClick" prefHeight="50.0" prefWidth="120.0" text="Simulate" />
-                              <Button layoutX="40.0" layoutY="100.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="120.0" text="Cancel" />
+                              <Button fx:id="btnSimulateStart" layoutX="40.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#onSimulateStartClick" prefHeight="50.0" prefWidth="120.0" text="Simulate" />
+                              <Button layoutX="40.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#onGenerateClick" prefHeight="50.0" prefWidth="120.0" text="Generate" />
                            </children>
                         </Pane>
                      </children>

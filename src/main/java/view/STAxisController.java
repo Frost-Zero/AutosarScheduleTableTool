@@ -58,7 +58,7 @@ public class STAxisController {
         String text = tfDuration.getText();
         int num = Integer.parseInt(text);
 
-        System.out.print(stvo.duration);
+//        System.out.print(stvo.duration);
         stvo.duration = num;
         stService.updateSTById(stvo.id, stvo);
 
