@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.Double?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Polygon?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="132.0" prefWidth="150.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VerificationEPLineController">
+   <children>
+      <Line endX="140.0" layoutY="66.0" stroke="#8a8a8a" strokeWidth="2.0" />
+      <Polygon fill="#8a8a8a" layoutX="141.0" layoutY="76.0" rotate="90.0" scaleX="0.1" scaleY="0.2" scaleZ="0.5" stroke="#8a8a8a" strokeType="INSIDE">
+        <points>
+          <Double fx:value="-50.0" />
+          <Double fx:value="40.0" />
+          <Double fx:value="50.0" />
+          <Double fx:value="40.0" />
+          <Double fx:value="0.0" />
+          <Double fx:value="-60.0" />
+        </points>
+      </Polygon>
+      <Label fx:id="labelVeriEPLine" layoutX="70.0" layoutY="45.0" text="3" />
+   </children>
+</Pane>

@@ -71,11 +71,9 @@ public class EPComboTasksComponentController {
             @Override
             public void changed(ObservableValue observable, Object oldValue, Object newValue) {
 
-//                int index = node_selected;
                 String string = comboEPTask.getSelectionModel().getSelectedItem().toString();
                 String result = string.split("\\(")[0].substring(1);
                 Integer id = Integer.valueOf(result);
-//                TaskVO newVO = (TaskVO) o
                 stService.updateTaskIdInEPs(STId, EPId, index, id);
             }
         });

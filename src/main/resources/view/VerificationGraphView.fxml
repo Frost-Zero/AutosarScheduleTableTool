@@ -7,8 +7,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
@@ -16,8 +15,7 @@
 <?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.text.Font?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VerificationGraphController">
    <children>
       <Pane prefHeight="50.0" prefWidth="1080.0" style="-fx-background-color: #BBBBBB;">
          <children>
@@ -28,11 +26,11 @@
             </Label>
          </children>
       </Pane>
-      <HBox prefHeight="250.0" prefWidth="1080.0">
+      <HBox prefHeight="300.0" prefWidth="1080.0">
          <children>
-            <StackPane minWidth="50.0" prefHeight="200.0" prefWidth="50.0">
+            <StackPane minWidth="50.0" prefHeight="300.0" prefWidth="50.0">
                <children>
-                  <Polygon fill="WHITE" rotate="-90.0" scaleX="0.3" scaleY="0.3" scaleZ="0.3" stroke="#9e9e9e" strokeType="INSIDE">
+                  <Polygon fill="#949494" onMouseClicked="#onLeftClick" rotate="-90.0" scaleX="0.3" scaleY="0.3" scaleZ="0.3" stroke="BLACK" strokeType="INSIDE">
                     <points>
                       <Double fx:value="-50.0" />
                       <Double fx:value="40.0" />
@@ -44,55 +42,69 @@
                   </Polygon>
                </children>
             </StackPane>
-            <VBox prefHeight="250.0" prefWidth="490.0" style="-fx-background-color: #EEEEEE;">
+            <VBox prefHeight="300.0" prefWidth="490.0" style="-fx-background-color: #EEEEEE;">
                <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  <StackPane prefHeight="200.0" prefWidth="490.0" />
+                  <StackPane prefHeight="20.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="200.0" fitWidth="534.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../Desktop/2F1818C4AD5AD8464C399E6BA48B7499.jpeg" />
-                           </image>
-                        </ImageView>
+                        <Label fx:id="labelSTLeft" text="ST1" />
                      </children>
                   </StackPane>
-                  <Pane prefHeight="50.0" prefWidth="490.0">
+                  <Pane prefHeight="40.0" prefWidth="490.0" style="-fx-background-color: #DDDDDD;">
                      <children>
-                        <Label layoutX="20.0" layoutY="15.0" text="Starting EP:">
+                        <Label layoutX="20.0" layoutY="9.0" text="Starting EP:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="250.0" layoutY="10.0" prefHeight="27.0" prefWidth="204.0" promptText="EP4" />
+                        <ComboBox fx:id="comboStartingEPLeft" layoutX="250.0" layoutY="8.0" prefHeight="27.0" prefWidth="204.0" promptText="EP4" />
                      </children>
                   </Pane>
-               </children>
-            </VBox>
-            <VBox prefHeight="250.0" prefWidth="490.0" style="-fx-background-color: #DDDDDD;">
-               <children>
-                  <StackPane prefHeight="150.0" prefWidth="200.0">
+                  <Pane prefHeight="40.0" prefWidth="490.0">
                      <children>
-                        <ImageView fitHeight="200.0" fitWidth="490.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../Desktop/A2C68B5D06381063C49F863757D9FF30.jpeg" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </StackPane>
-                  <Pane prefHeight="50.0" prefWidth="490.0">
-                     <children>
-                        <Label layoutX="20.0" layoutY="15.0" text="Starting EP:">
+                        <Label layoutX="20.0" layoutY="9.0" text="Starting Task:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="240.0" layoutY="10.0" prefHeight="27.0" prefWidth="204.0" promptText="EP5" />
+                        <ComboBox fx:id="comboStartingTaskLeft" layoutX="250.0" layoutY="8.0" prefHeight="27.0" prefWidth="204.0" promptText="Task1" />
                      </children>
                   </Pane>
                </children>
             </VBox>
-            <StackPane minWidth="50.0" prefHeight="200.0" prefWidth="50.0">
+            <VBox prefHeight="300.0" prefWidth="490.0" style="-fx-background-color: #DDDDDD;">
                <children>
-                  <Polygon fill="WHITE" rotate="90.0" scaleX="0.3" scaleY="0.3" scaleZ="0.3" stroke="#9e9e9e" strokeType="INSIDE">
+                  <StackPane prefHeight="200.0" prefWidth="490.0" />
+                  <StackPane prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="labelSTRight" text="ST2" />
+                     </children>
+                  </StackPane>
+                  <Pane prefHeight="40.0" prefWidth="490.0" style="-fx-background-color: #EEEEEE;">
+                     <children>
+                        <Label fx:id="labelStartingEPRight" layoutX="20.0" layoutY="9.0" text="Starting EP:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="comboStartingEPRight" layoutX="250.0" layoutY="8.0" prefHeight="27.0" prefWidth="204.0" promptText="EP5" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="40.0" prefWidth="490.0">
+                     <children>
+                        <Label fx:id="labelStartingTaskRight" layoutX="20.0" layoutY="9.0" text="Starting Task:">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="comboStartingTaskRight" layoutX="250.0" layoutY="8.0" prefHeight="27.0" prefWidth="204.0" promptText="Task2" />
+                     </children>
+                  </Pane>
+               </children>
+            </VBox>
+            <StackPane minWidth="50.0" prefHeight="300.0" prefWidth="50.0">
+               <children>
+                  <Polygon fill="#949494" onMouseClicked="#onRightClick" rotate="90.0" scaleX="0.3" scaleY="0.3" scaleZ="0.3" stroke="BLACK" strokeType="INSIDE">
                      <points>
                         <Double fx:value="-50.0" />
                         <Double fx:value="40.0" />
@@ -108,20 +120,16 @@
       </HBox>
       <StackPane prefHeight="50.0" prefWidth="1080.0" style="-fx-background-color: #888888;">
          <children>
-            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="200.0" text="Verify" />
+            <Button mnemonicParsing="false" onMouseClicked="#onVerifyClick" prefHeight="30.0" prefWidth="200.0" text="Verify" />
          </children>
       </StackPane>
-      <Pane prefHeight="200.0" prefWidth="1080.0">
+      <Pane prefHeight="150.0" prefWidth="1080.0">
          <children>
-            <StackPane prefHeight="150.0" prefWidth="1080.0" style="-fx-background-color: #AAAAAA;">
-               <children>
-                  <ImageView fitHeight="200.0" fitWidth="1080.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../Desktop/9C856583BEF03EC7B563E3AC492B601D.jpeg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </StackPane>
+            <ScrollPane fx:id="sPaneVeri" prefHeight="150.0" prefWidth="1080.0">
+               <content>
+                  <HBox fx:id="hBoxVeriEPComponent" prefHeight="132.0" prefWidth="1078.0" />
+               </content>
+            </ScrollPane>
          </children>
       </Pane>
       <Pane prefHeight="250.0" prefWidth="1080.0">

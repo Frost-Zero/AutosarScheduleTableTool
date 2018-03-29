@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Ellipse?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="132.0" prefWidth="130.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VerificationEPComponentController">
+   <children>
+      <Ellipse fill="#fcfcfc" radiusX="65.0" radiusY="45.0" stroke="#8c8c8cab" strokeType="INSIDE" />
+      <Label fx:id="labelVeriEP" alignment="CENTER" text="EP?" />
+   </children>
+</StackPane>

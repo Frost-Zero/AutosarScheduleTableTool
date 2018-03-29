@@ -63,7 +63,7 @@ public class EPConfigComponentController {
 
         setTFEPOffset(epvo.offset);
 
-        labelEPDuration.setText("      "+stService.findSTs().get(0).duration+"        )");
+        labelEPDuration.setText("      "+stService.findSTById(epvo.stId).duration+"        )");
 
         for(int i = 0; i<epvo.TaskIds.size(); i++) {
             int taskId = epvo.TaskIds.get(i);

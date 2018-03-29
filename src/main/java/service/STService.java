@@ -252,6 +252,23 @@ public class STService {
         return -1;
     }
 
+    public void updateStartingEPByIndex(int stIndex, int startingEP) {
+        STs.get(stIndex).setStartingEP(startingEP);
+    }
+
+    public void updateStartingEPIdById(int stIndex, int startingEPId) {
+        STs.get(stIndex).setStartingEPId(startingEPId);
+    }
+
+    public void updateStartingTaskById(int stIndex, int startingTask) {
+        STs.get(stIndex).setStartingTask(startingTask);
+    }
+
+    public void initStartingEPId() {
+        for (STPO po:STs) {
+            po.setStartingEPId(po.getEPs().get(po.getStartingEP()).getId());
+        }
+    }
     /////
 
     private STPO STVOToSTPO(STVO vo) {
@@ -259,6 +276,9 @@ public class STService {
         po.setId(vo.id);
         po.setDuration(vo.duration);
         po.setStart_time(vo.startTime);
+        po.setStartingEP(vo.startingEP);
+        po.setStartingTask(vo.startingTask);
+        po.setStartingEPId(vo.startingEPId);
 
         List<EPPO> eppos = new ArrayList<>();
         for (EPVO epvo:vo.EPs) {
@@ -274,6 +294,9 @@ public class STService {
         vo.id = po.getId();
         vo.duration = po.getDuration();
         vo.startTime = po.getStart_time();
+        vo.startingEP = po.getStartingEP();
+        vo.startingTask = po.getStartingTask();
+        vo.startingEPId = po.getStartingEPId();
 
         List<EPVO> epvos = new ArrayList<>();
         for (EPPO eppo:po.getEPs()) {

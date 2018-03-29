@@ -8,6 +8,7 @@ public class ServiceFactory {
     private static STService _stService;
     private static TaskService _taskService;
     private static DataCalcService _dataCalcService;
+    private static VeriEPService _veriEPService;
 
 //    private static EPService _epService;
 
@@ -30,6 +31,13 @@ public class ServiceFactory {
             _dataCalcService = new DataCalcService();
         }
         return _dataCalcService;
+    }
+
+    public static VeriEPService veriEPService() {
+        if (_veriEPService == null) {
+            _veriEPService = new VeriEPService();
+        }
+        return _veriEPService;
     }
 //    public static EPService EPService() {
 //        if (_epService == null) {

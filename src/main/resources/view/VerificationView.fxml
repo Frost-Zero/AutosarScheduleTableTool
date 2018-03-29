@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.VerificationViewController">
    <children>
       <Pane prefHeight="50.0" prefWidth="600.0" style="-fx-background-color: #BBBBBB;">
          <children>
@@ -44,8 +44,8 @@
             </Pane>
             <Pane prefHeight="350.0" prefWidth="150.0" style="-fx-background-color: #DDDDDD;">
                <children>
-                  <Button layoutX="25.0" layoutY="30.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Modify &amp; Verify" textAlignment="CENTER" wrapText="true" />
-                  <Button layoutX="25.0" layoutY="130.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Graph" />
+                  <Button layoutX="25.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#onReVerifyClick" prefHeight="60.0" prefWidth="100.0" text="Modify &amp; Verify" textAlignment="CENTER" wrapText="true" />
+                  <Button layoutX="25.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#onGraphClick" prefHeight="60.0" prefWidth="100.0" text="Graph" />
                   <Button layoutX="25.0" layoutY="230.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Cancel" />
                </children>
             </Pane>

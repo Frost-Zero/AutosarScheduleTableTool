@@ -16,14 +16,23 @@ public class STPO {
 
     private int start_time;
 
+    private int startingEP = 0;
+
+    private int startingEPId = 0;
+
+    private int startingTask = 0;
+
     public STPO() {
     }
 
-    public STPO(int id, List<EPPO> EPs, int duration, int start_time) {
+    public STPO(int id, List<EPPO> EPs, int duration, int start_time, int startingEP, int startingEPId, int startingTask) {
         this.id = id;
         this.EPs = EPs;
         this.duration = duration;
         this.start_time = start_time;
+        this.startingEP = startingEP;
+        this.startingEPId = startingEPId;
+        this.startingTask = startingTask;
     }
 
     public int getId() {
@@ -56,5 +65,29 @@ public class STPO {
 
     public void setStart_time(int start_time) {
         this.start_time = start_time;
+    }
+
+    public int getStartingEP() {
+        return startingEP;
+    }
+
+    public void setStartingEP(int startingEP) {
+        this.startingEP = startingEP;
+    }
+
+    public int getStartingTask() {
+        return startingTask;
+    }
+
+    public void setStartingTask(int startingTask) {
+        this.startingTask = startingTask;
+    }
+
+    public int getStartingEPId() {
+        return startingEPId;
+    }
+
+    public void setStartingEPId(int startingEPId) {
+        this.startingEPId = startingEPId;
     }
 }
