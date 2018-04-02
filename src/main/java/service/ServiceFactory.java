@@ -9,8 +9,7 @@ public class ServiceFactory {
     private static TaskService _taskService;
     private static DataCalcService _dataCalcService;
     private static VeriEPService _veriEPService;
-
-//    private static EPService _epService;
+    private static AutomationService _automationService;
 
     public static STService STService() {
         if (_stService == null) {
@@ -39,11 +38,12 @@ public class ServiceFactory {
         }
         return _veriEPService;
     }
-//    public static EPService EPService() {
-//        if (_epService == null) {
-//            _epService = new EPService();
-//        }
-//        return _epService;
-//    }
+
+    public static AutomationService automationService() {
+        if (_automationService == null) {
+            _automationService = new AutomationService();
+        }
+        return _automationService;
+    }
 
 }

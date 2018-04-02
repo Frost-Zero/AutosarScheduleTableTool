@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
@@ -44,7 +45,10 @@
             </StackPane>
             <VBox prefHeight="300.0" prefWidth="490.0" style="-fx-background-color: #EEEEEE;">
                <children>
-                  <StackPane prefHeight="200.0" prefWidth="490.0" />
+                  <StackPane prefHeight="200.0" prefWidth="490.0">
+                     <children>
+                        <ImageView fx:id="imageLeft" fitHeight="200.0" fitWidth="490.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></StackPane>
                   <StackPane prefHeight="20.0" prefWidth="200.0">
                      <children>
                         <Label fx:id="labelSTLeft" text="ST1" />
@@ -74,7 +78,10 @@
             </VBox>
             <VBox prefHeight="300.0" prefWidth="490.0" style="-fx-background-color: #DDDDDD;">
                <children>
-                  <StackPane prefHeight="200.0" prefWidth="490.0" />
+                  <StackPane prefHeight="200.0" prefWidth="490.0">
+                     <children>
+                        <ImageView fx:id="imageRight" fitHeight="200.0" fitWidth="490.0" pickOnBounds="true" preserveRatio="true" />
+                     </children></StackPane>
                   <StackPane prefHeight="20.0" prefWidth="200.0">
                      <children>
                         <Label fx:id="labelSTRight" text="ST2" />
@@ -118,11 +125,20 @@
             </StackPane>
          </children>
       </HBox>
-      <StackPane prefHeight="50.0" prefWidth="1080.0" style="-fx-background-color: #888888;">
+      <HBox prefHeight="50.0" prefWidth="1080.0">
          <children>
-            <Button mnemonicParsing="false" onMouseClicked="#onVerifyClick" prefHeight="30.0" prefWidth="200.0" text="Verify" />
+            <StackPane prefHeight="50.0" prefWidth="540.0" style="-fx-background-color: #888888;">
+               <children>
+                  <Button fx:id="btnVeriGenerate" mnemonicParsing="false" onMouseClicked="#onGenerateClick" prefHeight="30.0" prefWidth="200.0" text="Generate" />
+               </children>
+            </StackPane>
+            <StackPane prefHeight="50.0" prefWidth="540.0" style="-fx-background-color: #888888;">
+               <children>
+                  <Button fx:id="btnVerify" mnemonicParsing="false" onMouseClicked="#onVerifyClick" prefHeight="30.0" prefWidth="200.0" text="Verify" />
+               </children>
+            </StackPane>
          </children>
-      </StackPane>
+      </HBox>
       <Pane prefHeight="150.0" prefWidth="1080.0">
          <children>
             <ScrollPane fx:id="sPaneVeri" prefHeight="150.0" prefWidth="1080.0">

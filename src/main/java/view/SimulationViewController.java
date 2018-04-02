@@ -1,6 +1,7 @@
 package view;
 
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -85,7 +86,6 @@ public class SimulationViewController {
     @FXML
     public void onSimulateStartClick() {
         if (btnSimulateStart.getText().equals("Simulate") ) {
-//            btnSimulateStart.setStyle("fx-background-color: #00EE00");
             btnSimulateStart.setText("STOP");
             timer = new Timer();
             timer.schedule(new TimerTask() {
@@ -109,7 +109,6 @@ public class SimulationViewController {
             xAxis.setLowerBound(0);
             xAxis.setUpperBound(upperBound);
         }
-
     }
 
     public void stopTimerTask() {
