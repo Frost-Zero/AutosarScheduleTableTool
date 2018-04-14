@@ -17,11 +17,14 @@ public class AutomationService {
 
     private List<automationPO> autoPOsInST = new ArrayList<>();
 
-    private int smallestOffset = 10000;
+    private int smallestDelay = 10000;
+
+    private int duration;
 
     boolean stopFlag = false;
 
     public void dataCollect(List<STVO> STs) {
+        automationPOs.clear();
         for (STVO stvo:STs) {
             for (EPVO epvo:stvo.EPs) {
                 automationPO po = new automationPO();
@@ -32,6 +35,7 @@ public class AutomationService {
                 automationPOs.add(po);
             }
         }
+        duration = automationPOs.get(0).getDuration();
     }
 
     public List<automationVO> dataCalc(List<STVO> STs) {
@@ -53,7 +57,7 @@ public class AutomationService {
         automationVO vo = new automationVO();
         stopFlag = false;
 
-        //if all offset in pos < 0, stop finding next po
+        //if all delays in pos < 0, stop finding next po
         while(!stopFlag) {
             automationPO po = findNextPO(pos);
             vo.epIds.add(po.getEpId());
@@ -67,29 +71,29 @@ public class AutomationService {
 
     public automationPO findNextPO(List<automationPO> pos) {
         automationPO nextPO = new automationPO(-1,-1,-1,-1);
-        smallestOffset = 10000;
-        //find the smallestOffset
+        smallestDelay = 10000;
+        //find the smallestDelay
         for (automationPO po:pos) {
-            if (po.getOffset() < smallestOffset && po.getOffset() > 0) {
-                smallestOffset = po.getOffset();
+            if (po.getOffset() < smallestDelay && po.getOffset() > 0) {
+                smallestDelay = po.getOffset();
                 nextPO.setStId(po.getStId());
                 nextPO.setDuration(po.getDuration());
                 nextPO.setEpId(po.getEpId());
             }
         }
-        //minus the smallestOffset
-        if(smallestOffset != 10000) {
+        //minus the smallestDelay
+        if(smallestDelay != 10000) {
             for (automationPO po : pos) {
-                po.setOffset(po.getOffset() - smallestOffset);
+                po.setOffset(po.getOffset() - smallestDelay);
             }
         }
 
-        smallestOffset = 10000;
-        //find the nextDelay(new smallest offset)
+        smallestDelay = 10000;
+        //find the nextDelay(new smallest delay)
         for (automationPO po:pos) {
-            if (po.getOffset() < smallestOffset && po.getOffset() > 0) {
-                smallestOffset = po.getOffset();
-                nextPO.setOffset(smallestOffset);
+            if (po.getOffset() < smallestDelay && po.getOffset() > 0) {
+                smallestDelay = po.getOffset();
+                nextPO.setOffset(smallestDelay);
             }
         }
 
@@ -100,13 +104,13 @@ public class AutomationService {
             }
         }
 
-        //if none of offset of POs fits, find the smallest offset, plus duration and get the final delay
+        //if none of delay of POs fits, find the smallest delay, plus duration and get the final delay
         if (nextPO.getEpId() == -1 || pos.size() == 1 || !emptyFlag) {
-            smallestOffset = 10000;
-            int duration = pos.get(0).getDuration();
+            smallestDelay = 10000;
+
             for (automationPO po:pos) {
-                if (po.getOffset() < smallestOffset) {
-                    smallestOffset = po.getOffset();
+                if (po.getOffset() < smallestDelay) {
+                    smallestDelay = po.getOffset();
                     if(nextPO.getEpId() == -1) {
                         nextPO.setEpId(po.getEpId());
                     }

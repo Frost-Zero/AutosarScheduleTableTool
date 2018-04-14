@@ -33,8 +33,6 @@ public class TaskManagementViewController {
     @FXML
     private Button btnTMConfirm;
 
-    @FXML
-    private Button btnTMCancel;
 
     private TaskVO taskvo;
 
@@ -140,10 +138,4 @@ public class TaskManagementViewController {
         stage.close();
     }
 
-    public void onTMCancelClick() {
-        taskConfigController.cancelUpdateTasks();
-
-        Stage stage = (Stage) btnTMCancel.getScene().getWindow();
-        stage.close();
-    }
 }

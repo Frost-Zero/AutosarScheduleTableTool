@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.Double?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.LineChart?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -148,17 +145,6 @@
             </ScrollPane>
          </children>
       </Pane>
-      <Pane prefHeight="250.0" prefWidth="1080.0">
-         <children>
-            <LineChart layoutY="10.0" prefHeight="230.0" prefWidth="1080.0">
-              <xAxis>
-                <CategoryAxis side="BOTTOM" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis side="LEFT" />
-              </yAxis>
-            </LineChart>
-         </children>
-      </Pane>
+      <Pane fx:id="paneLineChart" prefHeight="250.0" prefWidth="1080.0" />
    </children>
 </VBox>

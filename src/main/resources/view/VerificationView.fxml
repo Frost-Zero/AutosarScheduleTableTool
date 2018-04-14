@@ -32,21 +32,20 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="40.0" layoutY="80.0" text="combination:" />
-                  <Label layoutX="40.0" layoutY="120.0" text="time:" />
-                  <Label layoutX="40.0" layoutY="160.0" text="task:" />
-                  <Label layoutX="180.0" layoutY="80.0" text="                                                 " underline="true" />
-                  <Label layoutX="180.0" layoutY="120.0" text="                                                 " underline="true" />
-                  <Label layoutX="180.0" layoutY="160.0" text="                                                 " underline="true" />
-                  <Label layoutX="180.0" layoutY="200.0" text="                                                 " underline="true" />
-                  <Label layoutX="180.0" layoutY="240.0" text="                                                 " underline="true" />
+                  <Label layoutX="40.0" layoutY="120.0" text="combination:" />
+                  <Label layoutX="40.0" layoutY="160.0" text="report:" />
+                  <Label layoutX="40.0" layoutY="80.0" text="task:" />
+                  <Label layoutX="180.0" layoutY="80.0" text="                Task3(EP3)              " textAlignment="CENTER" underline="true" />
+                  <Label layoutX="180.0" layoutY="120.0" text="     1/2:         EP4, EP6              " underline="true" />
+                  <Label layoutX="180.0" layoutY="160.0" text="      Click Modify Button to      " underline="true" />
+                  <Label layoutX="180.0" layoutY="200.0" text="         add the deadline of        " underline="true" />
+                  <Label layoutX="180.0" layoutY="240.0" text="Task3(EP3) (2,8,6) -&gt; (2,9,6) " underline="true" />
                </children>
             </Pane>
             <Pane prefHeight="350.0" prefWidth="150.0" style="-fx-background-color: #DDDDDD;">
                <children>
-                  <Button layoutX="25.0" layoutY="30.0" mnemonicParsing="false" onMouseClicked="#onReVerifyClick" prefHeight="60.0" prefWidth="100.0" text="Modify &amp; Verify" textAlignment="CENTER" wrapText="true" />
-                  <Button layoutX="25.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#onGraphClick" prefHeight="60.0" prefWidth="100.0" text="Graph" />
-                  <Button layoutX="25.0" layoutY="230.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="100.0" text="Cancel" />
+                  <Button layoutX="25.0" layoutY="79.0" mnemonicParsing="false" onMouseClicked="#onReVerifyClick" prefHeight="60.0" prefWidth="100.0" text="Modify &amp; Verify" textAlignment="CENTER" wrapText="true" />
+                  <Button layoutX="25.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#onGraphClick" prefHeight="60.0" prefWidth="100.0" text="Graph" />
                </children>
             </Pane>
          </children>

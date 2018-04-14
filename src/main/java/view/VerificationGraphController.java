@@ -8,6 +8,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -15,14 +18,14 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import service.AutomationService;
 import service.STService;
 import service.ServiceFactory;
 import service.VeriEPService;
 import util.GraphViz;
-import vo.EPVO;
-import vo.STVO;
-import vo.VeriEPVO;
+import vo.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,6 +49,11 @@ public class VerificationGraphController {
 
     private List<VeriEPVO> veriEPVOs = new ArrayList<>();
 
+    private List<automationVO> automationVOs = new ArrayList<>();
+
+    private List<RFVO> rfvos = new ArrayList<>();
+    private List<RFVO> temprfvos = new ArrayList<>();
+
     private int left = 0;
 
     private int right = 0;
@@ -54,7 +62,17 @@ public class VerificationGraphController {
 
     private long superPeriod = 20;
 
+    private int test = 0;
+    private int lowerBound = 0;
+    private int upperBound = 5;
+
+
+    private int yBound = upperBound -1;
     private Timer timer;
+
+    final NumberAxis xAxis = new NumberAxis();
+    final NumberAxis yAxis = new NumberAxis();
+    private LineChart<Number, Number> chart = new LineChart<Number, Number>(xAxis,yAxis);
 
     private ChangeListener scrollChangeListener = new ChangeListener() {
         @Override
@@ -150,7 +168,13 @@ public class VerificationGraphController {
     private ImageView imageRight;
 
     @FXML
+    private Pane paneLineChart;
+
+    @FXML
     public void initialize() {
+        //TODO test
+        test = 0;
+
         createEPsInSTGraph();
         veriEPService.clearVeriEPPOs();
         series = 0;
@@ -188,6 +212,7 @@ public class VerificationGraphController {
             }
         }
         removeListener();
+        clearImageView();
         clearComboBox();
         refresh();
         initScroll();
@@ -202,6 +227,7 @@ public class VerificationGraphController {
             }
         }
         removeListener();
+        clearImageView();
         clearComboBox();
         refresh();
         initScroll();
@@ -223,6 +249,13 @@ public class VerificationGraphController {
 
     @FXML
     public void onGenerateClick() {
+        rfvos.clear();
+        paneLineChart.getChildren().clear();
+        upperBound = 5;
+        yBound = 4;
+        test = 0;
+        chart.getData().clear();
+
         veriEPService.clearVeriEPPOs();
         hBoxVeriEPComponent.getChildren().clear();
         series = 0;
@@ -250,6 +283,10 @@ public class VerificationGraphController {
             e.printStackTrace();
         }
         series++;
+
+        initLineChart();
+        paneLineChart.getChildren().add(chart);
+        initScroll();
     }
 
     @FXML
@@ -265,6 +302,16 @@ public class VerificationGraphController {
                 public void run() {
                     Platform.runLater(() -> {
                         addVerificationComponent();
+                        //TODO
+                        if (upperBound < rfvos.size()) {
+                            upperBound++;
+                            xAxis.setUpperBound(upperBound);
+                            xAxis.setLowerBound(lowerBound);
+                            yBound++;
+                            yAxis.setUpperBound(temprfvos.get(yBound).y + 1);
+                        } else if (upperBound >= rfvos.size()) {
+
+                        }
                     });
                 }
             }, 1000, 2000);
@@ -322,6 +369,11 @@ public class VerificationGraphController {
         comboStartingTaskRight.getItems().clear();
     }
 
+    public void clearImageView(){
+        imageLeft.setImage(null);
+        imageRight.setImage(null);
+    }
+
     //refresh the label and comboBox
     public void refresh() {
         STs = stService.findSTs();
@@ -366,6 +418,8 @@ public class VerificationGraphController {
         File leftFile = new File("ST"+STs.get(left).id+".png");
         Image leftImage = new Image(leftFile.toURI().toString());
         imageLeft.setImage(leftImage);
+        imageLeft.setFitWidth(490);
+        imageLeft.setFitHeight(200);
         if(leftImage.getHeight()<imageLeft.getFitHeight() && leftImage.getWidth()<imageLeft.getFitWidth()) {
             imageLeft.setFitHeight(leftImage.getHeight());
             imageLeft.setFitWidth(leftImage.getWidth());
@@ -377,6 +431,8 @@ public class VerificationGraphController {
         if(right > 0) {
             File rightFile = new File("ST"+STs.get(right).id+".png");
             Image rightImage = new Image(rightFile.toURI().toString());
+            imageRight.setFitWidth(490);
+            imageRight.setFitHeight(200);
             imageRight.setImage(rightImage);
             if(rightImage.getHeight()<imageRight.getFitHeight() && rightImage.getWidth()<imageRight.getFitWidth()) {
                 imageRight.setFitHeight(rightImage.getHeight());
@@ -424,19 +480,81 @@ public class VerificationGraphController {
     public void createEPsInSTGraph() {
         STs = stService.findSTs();
         automationService.dataCollect(STs);
-        automationService.dataCalc(STs);
+        automationVOs = automationService.dataCalc(STs);
 
+        String dotFormat;
+        for (automationVO vo:automationVOs) {
+            int epSize = vo.epIds.size();
+            dotFormat = "";
+            for(int i=0; i<epSize-1; i++) {
+                dotFormat += "EP" + vo.epIds.get(i) + "->EP" + vo.epIds.get(i+1) + "[label=\"" + vo.delays.get(i) + "\"];";
+            }
+            dotFormat += "EP" + vo.epIds.get(epSize-1) + "->EP" + vo.epIds.get(0) + "[label=\"" + vo.delays.get(epSize-1) + "\"];";
+            createDotGraph(dotFormat,"ST"+vo.stId);
+        }
+    }
 
-        String dotFormat = "EP1->EP2[label=\"1\"];EP2->EP3[label=\"3\"];EP3->EP1[label=\"5\"]";
-        createDotGraph(dotFormat,"ST1");
+    public void initLineChart() {
 
-        dotFormat = "EP4->EP5[label=\"3\"];EP5->EP6[label=\"5\"];EP6->EP7[label=\"7\"];EP7->EP4[label=\"9\"]";
-        createDotGraph(dotFormat,"ST2");
+//        yAxis.setLabel("Number of request functions");
 
-        dotFormat = "EP8->EP8[label=\"10\"]";
-        createDotGraph(dotFormat,"ST3");
+        chart.setPrefWidth(1080);
+        chart.setPrefHeight(250);
+        chart.setTitle("Request Functions");
+        chart.setLegendVisible(false);
+        xAxis.setLabel("");
+        xAxis.setTickLabelFill(Color.CHOCOLATE);
+        xAxis.setAutoRanging(false);
+        xAxis.setLowerBound(lowerBound);
+        xAxis.setUpperBound(upperBound);
+        yAxis.setLabel("");
+        yAxis.setTickLabelFill(Color.CHOCOLATE);
+        yAxis.setAutoRanging(false);
 
-        //TODO createDotFormatByRealData
+        XYChart.Series series = new XYChart.Series();
+
+//        series.getData().add(new XYChart.Data(1,3));
+//
+//        series.getData().add(new XYChart.Data(3,3));
+//
+//        series.getData().add(new XYChart.Data(3,26));
+//
+//        series.getData().add(new XYChart.Data(6,26));
+
+        //TODO add rfvo by data
+        for(int i = 0; i<20; i++) {
+            addRFVO();
+        }
+
+        for(int i = 0; i < rfvos.size(); i++) {
+            series.getData().add(new XYChart.Data(rfvos.get(i).x, rfvos.get(i).y));
+        }
+
+        chart.getData().add(series);
+
+        yAxis.setUpperBound(temprfvos.get(yBound).y + 1);
+    }
+
+    public void addRFVO() {
+        RFVO vo = new RFVO();
+        int tempx = test;
+        int tempy = test * 2;
+
+        if(rfvos.size() > 0) {
+            if (tempy != rfvos.get(rfvos.size() - 1).y) {
+                RFVO tempvo = new RFVO();
+                tempvo.x = tempx;
+                tempvo.y = rfvos.get(rfvos.size() - 1).y;
+                rfvos.add(tempvo);
+            }
+        }
+        vo.x = tempx;
+        vo.y = tempy;
+        rfvos.add(vo);
+        temprfvos.add(vo);
+        test++;
+//        vo.x =
 
     }
+
 }

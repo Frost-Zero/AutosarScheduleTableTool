@@ -179,10 +179,13 @@ public class SimulationViewController {
     private void dataFunctions() {
         STs = stService.findSTs();
 
-        for (STVO vo:STs) {
-            superPeriod *= vo.duration;
+        if(STs.size() == 1) {
+            superPeriod = 100;
+        } else {
+            for (STVO vo : STs) {
+                superPeriod *= vo.duration;
+            }
         }
-
         dataCalcService.dataCalc(STs);
         for(int i = 0; i < superPeriod; i++) {
             dataCalcService.execution();

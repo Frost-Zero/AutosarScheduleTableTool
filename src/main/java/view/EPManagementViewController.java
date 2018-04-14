@@ -31,13 +31,8 @@ public class EPManagementViewController {
     private Button btnEPMDelete;
 
     @FXML
-    private Button btnEPMtoTM;
-
-    @FXML
     private Button btnEPMConfirm;
 
-    @FXML
-    private Button btnEPMCancel;
 
     @FXML
     private Label labelSTId;
@@ -133,7 +128,7 @@ public class EPManagementViewController {
             selectionModel.select(selectionModel.getSelectedIndex()+1);
 
         //TODO setSTINDEX
-        stService.removeEPinST(0,i);
+        stService.removeEPinST(stvo.id,i);
 
         refreshEPMBtnDelete();
     }
@@ -150,17 +145,6 @@ public class EPManagementViewController {
 
         Stage stage = (Stage) btnEPMConfirm.getScene().getWindow();
         stage.close();
-    }
-
-    public void onEPMCancelClick() {
-//        epConfigComponentController.cancelUpdateEPs();
-
-        Stage stage = (Stage) btnEPMCancel.getScene().getWindow();
-        stage.close();
-    }
-
-    public void onEPMtoTMClick() {
-
     }
 
 }
